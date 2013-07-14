@@ -8,28 +8,7 @@ fb.titleImage = 'tap.png';
 		Titanium.Facebook.appid = '320766681373313';
 		Titanium.Facebook.permissions = ['read_friendlists']; //Permissions your app need
 		
-	Titanium.Facebook.addEventListener('login', function(e)
-         {
-           if(e.success) {
-           	var name = Ti.UI.createLabel({
-           		text: Ti.Facebook.name + '/name',
-           		top: 10
-           		
-           	});
-           	
-           	fb.add(name);
-           	
-           alert('You are now logged in!');
-         } else if(e.error) {
-           alert('Error: ' + e.error);
-         } else if(e.cancelled) {
-           alert('You cancelled the login');
-		} 
-});
-		//call the facebook authorize method to login
-		Titanium.Facebook.authorize();
-
-
+	
 var imagem = Ti.UI.createImageView({
     image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
      top:10,
@@ -40,24 +19,60 @@ var imagem = Ti.UI.createImageView({
 });
 fb.add(imagem);
 
+
 var userName = Ti.UI.createLabel({
-	text: 'user.first_name'
+    image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/username',
+     top:10,
+ width:50,
+ height:50,
+ left:10
+ 
+});
+fb.add(userName);
+
+
+
+var userName = Ti.UI.createLabel({
+	text: 'https://graph.facebook.com/' + Ti.Facebook.uid + '/user.first_name',
+	top: 10
 });
 
 fb.add(userName);
 
 //Logout
 
-Titanium.Facebook.addEventListener('logout', function(e) {
-    alert('Logged out');
-});
-Titanium.Facebook.logout();
 
+//Button
 
-
-var button = Ti.Facebook.createLoginButton({
-    top : 50,
-    style : Ti.Facebook.BUTTON_STYLE_WIDE
+var attendingLabel = Ti.UI.createLabel({
+	text: "Are you going out tonight:",
+	top:80,
+	left:10
 });
 
-fb.add(button);
+fb.add(attendingLabel);
+
+var goingOutButton = Titanium.UI.iOS.createTabbedBar({
+	labels:['No', 'Maybe', 'Yes'],
+	backgroundColor:'#3e6d46',
+	top:80,
+	right:0,
+	style:Titanium.UI.iPhone.SystemButtonStyle.BAR,
+	height:20,
+	width:190
+});
+
+fb.add(goingOutButton);
+
+var logOut = Ti.UI.createButton({
+	title: "Log Out",
+	bottom:20
+});
+
+fb.add(logOut);
+
+logOut.addEventListener('click', function(){
+	if (!Titanium.Facebook.loggedIn){
+		Titanium.Facebook.logout
+	}
+});

@@ -42,7 +42,7 @@ self.leftNavButton = ButtonRetour;
  var drinkSpecialsLabel = Titanium.UI.createLabel({
  	color: '#fff',
  	backgroundColor:'#3e6d46',
- 	text: "DRINK SPECIALS",
+ 	text: "SPECIALS",
  	left:0,
  	top:60,
  	width:180
@@ -50,82 +50,160 @@ self.leftNavButton = ButtonRetour;
  
  self.add(drinkSpecialsLabel);
  
-var barsTable = Titanium.UI.createTableView({
-    top:80,
-    scrollable: true
+var specialsLabel = Ti.UI.createLabel({
+	bottom:30,
+	backgroundColor:'#e3e3e3'
 });
+
+self.add(specialsLabel); 
+ 
+ 
+ var fonts = {
+    button: {
+        fontSize: 10,
+        fontWeight: 'bold',
+        fontFamily: 'Helvetica Neue'
+    }
+};
+var buttons = {
+    selected: '/images/selectedDay.png',
+    unselected: '/images/bgDay.png'
+};
+var lastbutton = undefined;
+
+var toggle = function (e) {
+    specialsLabel.setText(e.source.special);
+    e.source.setBackgroundImage(buttons.selected);
+    if (lastbutton !== undefined) {
+    lastbutton.setBackgroundImage(buttons.unselected);
+}
+lastbutton = e.source; // here
+};
+ 
+ 
+ 
+var mondayButton = Ti.UI.createButton({
+	backgroundImage: buttons.unselected,
+	title: 'Mon',
+	width: 46,
+	height: 30,
+	bottom: 160,
+	left:0,
+	special: data.mon_special,
+	    font: fonts.button,
+});
+
+self.add(mondayButton); 
+mondayButton.addEventListener('click', toggle);
+ 	
+
+var tuesdayButton = Ti.UI.createButton({
+	backgroundImage: buttons.unselected,
+	title: 'Tues',
+	width: 46,
+	height: 30,
+	bottom: 160,
+	left:45,
+	special: data.tue_special,
+	font: fonts.button	
+});
+
+self.add(tuesdayButton); 
+tuesdayButton.addEventListener('click', toggle);
+
+
+ 
+var wednesdayButton = Ti.UI.createButton({
+    backgroundImage: buttons.unselected,
+    bottom: 160,
+    left: 90,
+    width: 46,
+    height: 30,
+    font: fonts.button,
+    special: data.wed_special,
+    title: 'Weds',
+    
+}); 
+self.add(wednesdayButton); 
+wednesdayButton.addEventListener('click', toggle);
  
 
  
- 
-var specialsMon = Titanium.UI.createTableViewRow({
-    title: data.mon_special,
-    height:60,
-    header: 'Monday'
-});
- 
-barData.push(specialsMon);
- 
-var specialsTues = Titanium.UI.createTableViewRow({
-    title: data.tue_special,
-    height:60,
-    header: 'Tuesday'
-});
- 
-barData.push(specialsTues);
- 
-var specialsWed = Titanium.UI.createTableViewRow({
-    title: barData.wed_special,
-    height:60,
-    header: 'Wednesday'
-});
- 
-barData.push(specialsWed);
- 
- var specialsThurs = Titanium.UI.createTableViewRow({
-    title: barData.thu_special,
-    height:60,
-    header: 'Thursday'
-});
- 
-barData.push(specialsThurs);
-  
- 
- var specialsFri = Titanium.UI.createTableViewRow({
-    title: barData.fri_special,
-    height:60,
-    header: 'Friday'
-});
+var thursdayButton = Ti.UI.createButton({
+    backgroundImage: buttons.unselected,
+    bottom: 160,
+    left: 135,
+    height: 30,
+    width: 46,
+    font: fonts.button,
+    title: 'Thurs',
+    special: data.thu_special,
 
-barData.push(specialsFri);
- 
-
-var specialsSat = Titanium.UI.createTableViewRow({
-    title: barData.sat_special,
-    height:60,
-    header: 'Saturday'
 });
- 
-
-barData.push(specialsSat);
+self.add(thursdayButton); 
+thursdayButton.addEventListener('click', toggle);
 
 
-var specialsSun = Titanium.UI.createTableViewRow({
-    title: barData.sun_special,
-    height:60,
-    header: 'Sunday'
-});
- 
 
-barData.push(specialsSun);
  
-barsTable.setData(barData);
  
-self.add(barsTable);
-    // create your table here with the 
-    // properties in the data argument
+var fridayButton = Ti.UI.createButton({
+	backgroundImage: buttons.unselected,
+	title: 'Fri',
+	width: 46,
+	height: 30,
+	bottom: 160,
+	left:180,
+	special: data.fri_special,
+	    font: fonts.button,
+
+});
+
+self.add(fridayButton); 
+
+fridayButton.addEventListener('click', toggle);
+ 	
+
  
+var saturdayButton = Ti.UI.createButton({
+	backgroundImage: buttons.unselected,
+	title: 'Sat',
+	height: 30,
+	width: 46,
+	bottom: 160,
+	left:225,
+	special: data.sat_special,
+	    font: fonts.button,
+
+
+});
+
+self.add(saturdayButton); 
+
+saturdayButton.addEventListener('click', toggle);
+
+
+ 
+var sundayButton = Ti.UI.createButton({
+	backgroundImage: buttons.unselected,
+	title: 'Sun',
+	width: 46,
+	height: 30,
+	bottom: 160,
+	left:270,
+	special: data.sun_special,
+	    font: fonts.button,
+
+});
+
+self.add(sundayButton); 
+
+sundayButton.addEventListener('click', toggle);
+ 	
+
+
     return self;
 };
  
 module.exports = detail;
+

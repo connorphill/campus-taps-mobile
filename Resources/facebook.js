@@ -6,7 +6,7 @@ fb.titleImage = 'tap.png';
 //create your facebook sessionf
 
 		Titanium.Facebook.appid = '320766681373313';
-		Titanium.Facebook.permissions = ['read_friendlists']; //Permissions your app need
+		Titanium.Facebook.permissions = ['read_stream']; //Permissions your app need
 		
 	
 var imagem = Ti.UI.createImageView({
@@ -20,21 +20,11 @@ var imagem = Ti.UI.createImageView({
 fb.add(imagem);
 
 
-var userName = Ti.UI.createLabel({
-    image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/username',
-     top:10,
- width:50,
- height:50,
- left:10
- 
-});
-fb.add(userName);
-
 
 
 var userName = Ti.UI.createLabel({
 	text: 'https://graph.facebook.com/' + Ti.Facebook.uid + '/user.first_name',
-	top: 10
+	top: 40
 });
 
 fb.add(userName);
@@ -71,8 +61,14 @@ var logOut = Ti.UI.createButton({
 
 fb.add(logOut);
 
-logOut.addEventListener('click', function(){
-	if (!Titanium.Facebook.loggedIn){
-		Titanium.Facebook.logout
-	}
+
+
+logOut.addEventListener('click', function(e) {
+    if (!Titanium.Facebook.loggedIn) {
+    	Titanium.Facebook.logout();
+    	var login = require('login.js');
+    	login.open();
+    } else {
+    	Titanium.Facebook.authorize();
+    }
 });

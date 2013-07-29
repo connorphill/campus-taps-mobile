@@ -11,18 +11,22 @@ var win = Ti.UI.createWindow({
 	
 });
  
+ 
+var campusTapsLogo = Ti.UI.createImageView({
+	image: '/images/campusTapsLogo.png',
+	top: 60,
+	width: 300,
+	height: 100
+});
+win.add(campusTapsLogo); 
+ 
 var fbSignupBtn = Ti.Facebook.createLoginButton({
     bottom: 50,
     style : Ti.Facebook.BUTTON_STYLE_WIDE
 });
 win.add(fbSignupBtn);
  
-fbSignupBtn.addEventListener('click', function() {
-	if (!Titanium.Facebook.loggedIn) {
-		Titanium.Facebook.authorize();
-	}
-});
- 
+
  
  Titanium.Facebook.addEventListener('login', function(e) {
 	if (e.success) {

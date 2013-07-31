@@ -1,7 +1,10 @@
 var fb = Ti.UI.currentWindow;
 fb.barColor='#fff';
 fb.titleImage = 'tap.png';
+
+var facebook = require('facebook');
 //START Facebook Code
+        Ti.Facebook.authorize();
 
 //create your facebook sessionf
 
@@ -21,13 +24,25 @@ fb.add(imagem);
 
 
 
+    Ti.Facebook.requestWithGraphPath('me', {}, 
+         "GET", function(e) {
+    if (e.success) {
+        var response = JSON.parse(e.result);
+         var profileName = Ti.UI.createLabel({
+         	text: response.name,
+         	top: 30
+         });
+      
+    	} else if (e.error) {
+                        alert("Error = "+e.error);
+                    } else {
+                        alert('Unknown response');
+                    }
+                    fb.add(profileName);
+                });
 
-var userName = Ti.UI.createLabel({
-	text: 'https://graph.facebook.com/' + Ti.Facebook.uid + '/user.first_name',
-	top: 40
-});
 
-fb.add(userName);
+
 
 //Logout
 
@@ -63,8 +78,9 @@ fb.add(logOut);
 
 
 
+
 logOut.addEventListener('click', function(e) {
-    if (!Titanium.Facebook.loggedIn) {
+    if (e.success) {
     	Titanium.Facebook.logout();
     	var login = require('login.js');
     	login.open();

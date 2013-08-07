@@ -5,8 +5,8 @@ Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
  
 
 var win = Ti.UI.createWindow({
-	modal:true,
 	navBarHidden:true,
+	tabBarHidden:true,
 	backgroundColor:'#fff'
 	
 });

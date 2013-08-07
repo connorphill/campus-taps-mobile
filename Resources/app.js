@@ -1,11 +1,17 @@
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
-var win1 = Titanium.UI.createWindow({  
+var loginWindow = Titanium.UI.createWindow({  
     title:'Tab 1',
     backgroundColor:'#fff',
-    url: 'login.js'
-    
+    url: 'login.js',
     
 });
+
+if(Ti.Facebook.loggedIn = false){
+loginWindow.open()
+}
+else {
+	loginWindow.close()
+};
 
 
 
@@ -15,26 +21,26 @@ Titanium.UI.setBackgroundColor('#000');
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
 
+var login = Ti.UI.createTab({
+	window:loginWindow,
+});
 
 //
 // create base UI tab and root window
 //
+var dailySpecials = Ti.UI.createWindow({
+	backgroundColor: '#fff',
+	barImage:'/images/barNav.png',
+	url:'dailySpecials.js'
+})
 
 var tab1 = Titanium.UI.createTab({  
-    icon:'KS_nav_views.png',
+    icon:'',
     title:'Tab 1',
-    window:win1
+    window:dailySpecials
 });
 
-var label1 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'I am Window 1',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:'auto'
-});
 
-win1.add(label1);
 
 //
 // create controls tab and root window
@@ -84,6 +90,7 @@ win3.add(label3);
 //
 //  add tabs
 //
+tabGroup.addTab(login);
 tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2);  
 tabGroup.addTab(tab3); 

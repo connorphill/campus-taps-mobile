@@ -1,6 +1,7 @@
 var fb = Ti.UI.currentWindow;
-fb.barColor='#fff';
+fb.barColor = '#3b5e34';
 fb.titleImage = 'tap.png';
+fb.barImage = '/images/navBar.png';
 
 var facebook = require('facebook');
 //START Facebook Code
@@ -32,6 +33,10 @@ fb.add(imagem);
          	text: response.name,
          	top: 30
          });
+         var fbProfilePic = Ti.UI.createLabel({
+         	image: response.picture,
+         	top: 50
+         });
       
     	} else if (e.error) {
                         alert("Error = "+e.error);
@@ -39,6 +44,8 @@ fb.add(imagem);
                         alert('Unknown response');
                     }
                     fb.add(profileName);
+                    fb.add(fbProfilePic);
+
                 });
 
 
@@ -50,24 +57,65 @@ fb.add(imagem);
 //Button
 
 var attendingLabel = Ti.UI.createLabel({
-	text: "Are you going out tonight:",
+	text: "Are you going out:",
 	top:80,
 	left:10
 });
 
 fb.add(attendingLabel);
 
-var goingOutButton = Titanium.UI.iOS.createTabbedBar({
-	labels:['No', 'Maybe', 'Yes'],
-	backgroundColor:'#3e6d46',
-	top:80,
-	right:0,
-	style:Titanium.UI.iPhone.SystemButtonStyle.BAR,
-	height:20,
-	width:190
+
+
+var goingOutView = Ti.UI.createView({
+	right: 0,
+	width: 180,
+	height: 30,
+	top: 80,
 });
 
-fb.add(goingOutButton);
+fb.add(goingOutView);
+
+var lastChoice = undefined;
+
+var goingOutNo = Ti.UI.createButton({
+	backgroundImage:'/images/nobg.png',
+	width:60,
+	height:30,
+	left:0,
+	backgroundColor:'#000'
+});
+
+goingOutView.add(goingOutNo);
+
+goingOutNo.addEventListener('click', function(e){
+	goingOutNo.backgroundImage='/images/nobg.png';
+	if (lastChoice !== undefined) {
+		lastChoice.backgroundImage='/images/maybebg.png';
+		
+	}
+	lastChoice = e.source;
+});
+
+var goingOutMaybe = Ti.UI.createButton({
+	image:'/images/maybebg.png',
+	backgroundSelectedImage: '/images/yesbg.png',
+	width:60,
+	height:30,
+	left:60,
+	backgroundColor:'#000'
+});
+
+goingOutView.add(goingOutMaybe);
+
+var goingOutYes = Ti.UI.createButton({
+	image:'/images/yesbg.png',
+	width:60,
+	height:30,
+	left:120,
+	backgroundColor:'#000'
+});
+
+goingOutView.add(goingOutYes);
 
 var logOut = Ti.UI.createButton({
 	title: "Log Out",

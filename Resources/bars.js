@@ -1,6 +1,7 @@
 var win = Ti.UI.currentWindow;
-win.barColor = '#fff';
+win.barColor = '#3b5e34';
 win.titleImage = 'tap.png';
+win.barImage = '/images/navBar.png';
 
 
 var data = [],

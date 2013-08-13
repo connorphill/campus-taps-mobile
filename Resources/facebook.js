@@ -4,6 +4,7 @@ fb.titleImage = 'tap.png';
 fb.barImage = '/images/navBar.png';
 
 var facebook = require('facebook');
+
 //START Facebook Code
         Ti.Facebook.authorize();
 
@@ -12,7 +13,19 @@ var facebook = require('facebook');
 		Titanium.Facebook.appid = '320766681373313';
 		Titanium.Facebook.permissions = ['read_stream']; //Permissions your app need
 		
+		
+var settingsButton = Ti.UI.createImageView({
+	image:'/images/settingsIcon.png',
+	width:50,
+	height:36
+});
+
+fb.add(settingsButton);
+
+fb.rightNavButton = settingsButton;
+		
 	
+
 var imagem = Ti.UI.createImageView({
     image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
      top:10,
@@ -117,6 +130,30 @@ var goingOutYes = Ti.UI.createButton({
 
 goingOutView.add(goingOutYes);
 
+
+
+
+
+var friendsPlansButton = Ti.UI.createButton({
+	height:60,
+	width: 200,
+});
+fb.add(friendsPlansButton);
+
+
+friendsPlansButton.addEventListener("click",function(eventObject){
+ 
+    var newWindow = Titanium.UI.createWindow({
+        url:'fbFriends.js'
+ 
+    });
+ 
+    newWindow.open();
+});
+
+
+
+
 var logOut = Ti.UI.createButton({
 	title: "Log Out",
 	bottom:20
@@ -126,13 +163,11 @@ fb.add(logOut);
 
 
 
+logOut.addEventListener('click', function() {
+if(Titanium.Facebook.loggedIn){
+    Titanium.Facebook.logout()
+    return Ti.include('login.js');
+}
+ Titanium.Facebook.authorize();
 
-logOut.addEventListener('click', function(e) {
-    if (e.success) {
-    	Titanium.Facebook.logout();
-    	var login = require('login.js');
-    	login.open();
-    } else {
-    	Titanium.Facebook.authorize();
-    }
-});
+  });

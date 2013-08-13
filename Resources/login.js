@@ -38,7 +38,6 @@ win.add(fbSignupBtn);
 				var user = e.users[0];
 				Ti.API.info('User  = ' + JSON.stringify(user));
 				Ti.App.Properties.setString('currentUserId', user.id);
-				alert('Success: ' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 				win.close();			
 			} else {
 				alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
@@ -47,7 +46,7 @@ win.add(fbSignupBtn);
 	} else if (e.error) {
 		alert("Error = " + e.error);
 	} else if (e.cancelled) {
-		alert("canceld");
+		alert("cancelled");
 	}
 }); 
  

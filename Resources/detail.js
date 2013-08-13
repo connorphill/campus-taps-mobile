@@ -3,15 +3,16 @@ function detail(data) {
         backgroundColor:'#fff',
     });
     
-    self.barColor = '#3b5e34';
+    self.barColor = '#3b632f';
     self.titleImage = 'tap.png';
 	self.barImage = '/images/navBar.png';
  
  
  
- var ButtonRetour = Ti.UI.createButton({
-    image:'/images/backButton.png' 
-           
+ var ButtonRetour = Ti.UI.createImageView({
+   	image:'/images/backButton.png',
+   	width:50,
+   	height:36
 });             
  
 ButtonRetour.addEventListener('click', function(){

@@ -20,6 +20,7 @@ ButtonRetour.addEventListener('click', function(){
 });
  
 self.leftNavButton = ButtonRetour;
+  
  
  
  var barData = [];

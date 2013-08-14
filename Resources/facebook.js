@@ -14,17 +14,30 @@ var facebook = require('facebook');
 		Titanium.Facebook.permissions = ['read_stream']; //Permissions your app need
 		
 		
-var settingsButton = Ti.UI.createImageView({
-	image:'/images/settingsIcon.png',
-	width:50,
-	height:36
+ var rightButton = Ti.UI.createImageView({
+   	image:'/images/settingsIcon.png',
+   	width:50,
+   	height:36
+});             
+ 
+rightButton.addEventListener('click', function(){
+	 var settingsWindow = Ti.UI.createWindow({
+	 url:'profileSettings.js',
+	 modal: true
+	 });
+	 settingsWindow.open();
+});
+ 
+fb.rightNavButton = rightButton;
+	
+var userProfileView = Ti.UI.createView({
+	backgroundColor:'#D3FFC6',
+	top:0,
+	width:"100%",
+	height:80
 });
 
-fb.add(settingsButton);
-
-fb.rightNavButton = settingsButton;
-		
-	
+fb.add(userProfileView);
 
 var imagem = Ti.UI.createImageView({
     image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
@@ -34,7 +47,7 @@ var imagem = Ti.UI.createImageView({
  left:10
  
 });
-fb.add(imagem);
+userProfileView.add(imagem);
 
 
 
@@ -44,7 +57,7 @@ fb.add(imagem);
         var response = JSON.parse(e.result);
          var profileName = Ti.UI.createLabel({
          	text: response.name,
-         	top: 30
+         	top: 25
          });
          var fbProfilePic = Ti.UI.createLabel({
          	image: response.picture,
@@ -56,15 +69,16 @@ fb.add(imagem);
                     } else {
                         alert('Unknown response');
                     }
-                    fb.add(profileName);
-                    fb.add(fbProfilePic);
+                    userProfileView.add(profileName);
+                    userProfileView.add(fbProfilePic);
 
                 });
 
 
 
 
-//Logout
+//Going Out Status
+
 
 
 //Button
@@ -88,49 +102,86 @@ var goingOutView = Ti.UI.createView({
 
 fb.add(goingOutView);
 
-var lastChoice = undefined;
 
-var goingOutNo = Ti.UI.createButton({
-	backgroundImage:'/images/nobg.png',
-	width:60,
+var profileGoingOutStatus = Ti.UI.createImageView({
+        top:25,
+        left:70
+    });
+
+fb.add(profileGoingOutStatus);
+
+
+
+var toggledButton;
+var toggleButton = function (e) {
+    if (e.source.isToggled === false) {
+        // reset previous button to off
+        toggledButton.setBackgroundImage(toggledButton.imageOff);
+        toggledButton.isToggled = false;
+        // set new button to on
+        e.source.setBackgroundImage(e.source.imageOn);
+        profileGoingOutStatus.setImage(e.source.status);
+        e.source.isToggled = true;
+        
+        // cache current button as previous button
+        toggledButton = e.source;
+    }
+    switch (e.source.id) {
+    case 1:
+        // do something specific
+        break;
+    }
+};
+
+var btn1 = Ti.UI.createButton({
+    title: 'No',
+    backgroundImage: '/images/noSelected.png',
+    imageOff: '/images/nobg.png',
+    imageOn: '/images/noSelected.png',
+    isToggled: true,
+    status: '/images/statusNo.png',
+    width:60,
 	height:30,
-	left:0,
-	backgroundColor:'#000'
+    left: 0,
+    id: 1
 });
 
-goingOutView.add(goingOutNo);
+goingOutView.add(btn1);
 
-goingOutNo.addEventListener('click', function(e){
-	goingOutNo.backgroundImage='/images/nobg.png';
-	if (lastChoice !== undefined) {
-		lastChoice.backgroundImage='/images/maybebg.png';
-		
-	}
-	lastChoice = e.source;
-});
-
-var goingOutMaybe = Ti.UI.createButton({
-	image:'/images/maybebg.png',
-	backgroundSelectedImage: '/images/yesbg.png',
-	width:60,
+var btn2 = Ti.UI.createButton({
+    title: 'Maybe',
+    backgroundImage: '/images/maybebg.png',
+    imageOff: '/images/maybebg.png',
+    imageOn: '/images/maybeSelected.png',
+    isToggled: false,
+    status: '/images/statusMaybe.png',
+    width:60,
 	height:30,
-	left:60,
-	backgroundColor:'#000'
+    left: 60,
+    id: 2
 });
 
-goingOutView.add(goingOutMaybe);
+goingOutView.add(btn2);
 
-var goingOutYes = Ti.UI.createButton({
-	image:'/images/yesbg.png',
-	width:60,
+var btn3 = Ti.UI.createButton({
+    title: 'Yes',
+    backgroundImage: '/images/yesbg.png',
+    imageOff: '/images/yesbg.png',
+    imageOn: '/images/yesSelected.png',
+    isToggled: false,
+    status: '/images/statusYes.png',
+    width:60,
 	height:30,
-	left:120,
-	backgroundColor:'#000'
+    left: 120,
+    id: 3
 });
 
-goingOutView.add(goingOutYes);
+goingOutView.add(btn3);
 
-
+btn1.addEventListener('click', toggleButton);
+btn2.addEventListener('click', toggleButton);
+btn3.addEventListener('click', toggleButton);
+toggledButton = btn1; // set to on button
 
 
 

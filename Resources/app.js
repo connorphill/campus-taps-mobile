@@ -1,17 +1,22 @@
-// this sets the background color of the master UIView (when there are no windows/tab groups on it)
-var loginWindow = Titanium.UI.createWindow({  
-    title:'Tab 1',
-    backgroundColor:'#fff',
-    url: 'login.js',
-    
-});
 
-if(Ti.Facebook.loggedIn = false){
-loginWindow.open()
+Titanium.Facebook.appid = "320766681373313";//Production
+Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
+ 
+ if (Titanium.Facebook.loggedIn == true)
+{}
+else
+{
+  var loginWindow = Ti.UI.createWindow({
+  	url:'login.js',
+  	navBarHidden: true,
+  	modal: false,
+  	
+  });
+  loginWindow.open({animation:false});
 }
-else {
-	loginWindow.close()
-};
+
+
+
 
 
 
@@ -21,9 +26,7 @@ Titanium.UI.setBackgroundColor('#000');
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
 
-var login = Ti.UI.createTab({
-	window:loginWindow,
-});
+
 
 //
 // create base UI tab and root window
@@ -90,10 +93,10 @@ win3.add(label3);
 //
 //  add tabs
 //
-tabGroup.addTab(login);
 tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2);  
 tabGroup.addTab(tab3); 
 
 // open tab group
 tabGroup.open();
+

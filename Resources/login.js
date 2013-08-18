@@ -4,13 +4,9 @@ Titanium.Facebook.appid = "320766681373313";//Production
 Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
  
 
-var win = Ti.UI.createWindow({
-	navBarHidden:true,
-	tabBarHidden:true,
-	backgroundColor:'#fff'
-	
-});
- 
+var win = Ti.UI.currentWindow;
+
+win.backgroundColor = '#fff';
  
 var campusTapsLogo = Ti.UI.createImageView({
 	image: '/images/campusTapsLogo.png',

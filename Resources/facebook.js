@@ -5,6 +5,8 @@ fb.barImage = '/images/navBar.png';
 
 var facebook = require('facebook');
 
+
+
 //START Facebook Code
         Ti.Facebook.authorize();
 
@@ -216,9 +218,18 @@ fb.add(logOut);
 
 logOut.addEventListener('click', function() {
 if(Titanium.Facebook.loggedIn){
-    Titanium.Facebook.logout()
-    return Ti.include('login.js');
+    Titanium.Facebook.logout();
+    var loginWindow = Ti.UI.createWindow({
+  	url:'login.js',
+  	navBarHidden: true,
+  	modal: false,
+  	
+  });
+  loginWindow.open({animation:false});
+    
 }
+else{
  Titanium.Facebook.authorize();
+}
 
   });

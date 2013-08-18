@@ -14,7 +14,6 @@ var scrollView = Ti.UI.createScrollView({
   bottom:0
 });
 var view = Ti.UI.createView({
-  backgroundColor:'#000',
   height: 300,
   width: '100%'
 });
@@ -23,7 +22,7 @@ daily.add(scrollView);
 
 
 var allBars = Ti.UI.createButton({
-	image:'/images/allBar.png',
+	image:'/images/dailySpecials/generalArea.png',
 	height:30,
 	width:'100%',
 	title:'All',
@@ -33,10 +32,10 @@ var allBars = Ti.UI.createButton({
 view.add(allBars);
 
 var loyolaBars = Ti.UI.createButton({
-	image:'/images/loyolaBar.png',
-	title:'Loyola',
+	image:'/images/dailySpecials/loyolaArea.png',
 	height:30,
 	width:'100%',
+	font:{color:'black'},
 	title:'Loyola',
 	top:30
 });
@@ -44,8 +43,7 @@ var loyolaBars = Ti.UI.createButton({
 view.add(loyolaBars);
 
 var johnsHopkinsBars = Ti.UI.createButton({
-	image:'/images/johnsHopkinsBar.png',
-	title:'Johns Hopkins',
+	image:'/images/dailySpecials/johnsHopkinsArea.png',
 	height:30,
 	width:'100%',
 	title:'Johns Hopkins',
@@ -55,45 +53,42 @@ var johnsHopkinsBars = Ti.UI.createButton({
 view.add(johnsHopkinsBars);
 
 var towsonBars = Ti.UI.createButton({
-	image:'/images/towsonBar.png',
-	title:'Towson',
+	image:'/images/dailySpecials/towsonArea.png',
 	height:30,
 	width:'100%',
 	title:'Towson',
-	top:60
+	top:90
 });
 
 view.add(towsonBars);
 
 
 var downtownBars = Ti.UI.createButton({
-	image:'/images/downtownBar.png',
-	title:'Downtown',
+	image:'/images/dailySpecials/generalArea.png',
 	height:30,
 	width:'100%',
 	title:'Downtown',
-	top:90
+	top:120
 });
 
 view.add(downtownBars);
 
 var federalHillBars = Ti.UI.createButton({
-	image:'/images/federalHillBar.png',
-	title:'Federal Hill',
+	image:'/images/dailySpecials/generalArea.png',
 	height:30,
 	width:'100%',
 	title:'Federal Hill',
-	top:120
+	top:150
 });
 
 view.add(federalHillBars);
 
 var fellsPointBars = Ti.UI.createButton({
-	image:'/images/fellsPointBar.png',
+	image:'/images/dailySpecials/generalArea.png',
 	height:30,
 	width:'100%',
 	title:'Fells Point',
-	top:150
+	top:180
 });
 
 view.add(fellsPointBars);

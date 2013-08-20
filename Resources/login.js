@@ -34,7 +34,8 @@ win.add(fbSignupBtn);
 				var user = e.users[0];
 				Ti.API.info('User  = ' + JSON.stringify(user));
 				Ti.App.Properties.setString('currentUserId', user.id);
-				win.close();			
+				win.close();
+						
 			} else {
 				alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
 			}

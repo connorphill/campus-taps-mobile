@@ -25,9 +25,9 @@ var facebook = require('facebook');
 rightButton.addEventListener('click', function(){
 	 var settingsWindow = Ti.UI.createWindow({
 	 url:'profileSettings.js',
-	 modal: true
+	
 	 });
-	 settingsWindow.open();
+	 Ti.UI.currentTab.open(settingsWindow);
 });
  
 fb.rightNavButton = rightButton;
@@ -207,29 +207,3 @@ friendsPlansButton.addEventListener("click",function(eventObject){
 
 
 
-var logOut = Ti.UI.createButton({
-	title: "Log Out",
-	bottom:20
-});
-
-fb.add(logOut);
-
-
-
-logOut.addEventListener('click', function() {
-if(Titanium.Facebook.loggedIn){
-    Titanium.Facebook.logout();
-    var loginWindow = Ti.UI.createWindow({
-  	url:'login.js',
-  	navBarHidden: true,
-  	modal: false,
-  	
-  });
-  loginWindow.open({animation:false});
-    
-}
-else{
- Titanium.Facebook.authorize();
-}
-
-  });

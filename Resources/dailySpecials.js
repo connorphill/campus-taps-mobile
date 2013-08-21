@@ -3,6 +3,26 @@ daily.barColor = '#3b5e34';
 daily.titleImage = 'tap.png';
 daily.barImage = '/images/navBar.png';
 
+//NOT FINISHED, JUST IMPLEMENTED
+var view1 = Ti.UI.createView({backgroundColor:'#123'});
+var view2 = Ti.UI.createView({backgroundColor:'#246'});
+var view3 = Ti.UI.createView({backgroundColor:'#48b'});
+
+
+var contentSlider = Ti.UI.createScrollableView({
+	views:[view1,view2,view3],
+	showPagingControl:true,
+	top:0,
+	height:'50%'
+});
+
+daily.add(contentSlider);
+
+
+
+//END NOT FINISHED, JUST IMPLEMENTED
+
+
 
 var scrollView = Ti.UI.createScrollView({
   contentWidth: 'auto',

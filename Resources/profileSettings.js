@@ -40,7 +40,14 @@ profileSettings.add(logOut);
  
 table.setData([socialSettings,profileSettings]);
 
-
+findFriends.addEventListener('click', function(){
+	var findFriends = Ti.UI.createWindow({
+  	url:'findFriends.js',
+  	navBarHidden: false,
+  	modal: false,
+});
+	 Ti.UI.currentTab.open(findFriends);
+});
 
 
 logOut.addEventListener('click', function() {

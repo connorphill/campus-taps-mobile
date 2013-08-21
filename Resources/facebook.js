@@ -107,7 +107,8 @@ fb.add(goingOutView);
 
 var profileGoingOutStatus = Ti.UI.createImageView({
         top:25,
-        left:70
+        left:70,
+        image:'/images/statusNo.png'
     });
 
 fb.add(profileGoingOutStatus);

@@ -25,19 +25,16 @@ daily.add(contentSlider);
 
 
 var scrollView = Ti.UI.createScrollView({
-  contentWidth: 'auto',
-  contentHeight: 'auto',
+  contentWidth: Ti.UI.FILL, // changed
+  contentHeight: Ti.UI.SIZE, // changed
+  layout: 'vertical', // new
   showVerticalScrollIndicator: true,
   showHorizontalScrollIndicator: false,
   height: '50%',
-  width: '100%',
+  width: Ti.UI.FILL, // changed  
   bottom:0
 });
-var view = Ti.UI.createView({
-  height: 300,
-  width: '100%'
-});
-scrollView.add(view);
+
 daily.add(scrollView);
 
 
@@ -47,9 +44,11 @@ var toggleButton = function (e) {
     if (e.source.isToggled === false) {
         // reset previous button to off
         toggledButton.setBackgroundImage(toggledButton.imageOff);
+        toggledButton.setColor(toggledButton.fontOff);
         toggledButton.isToggled = false;
         // set new button to on
         e.source.setBackgroundImage(e.source.imageOn);
+        e.source.setColor(e.source.fontOn.color);
         e.source.isToggled = true;
         
         // cache current button as previous button
@@ -70,6 +69,8 @@ var allBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalAreaSelected.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
 	imageOn:'/images/dailySpecials/generalAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
 	isToggled: true,
 	height:30,
 	width:'100%',
@@ -78,93 +79,110 @@ var allBars = Ti.UI.createButton({
 	id: 1
 });
 
-view.add(allBars);
+scrollView.add(allBars);
 
 var loyolaBars = Ti.UI.createButton({
-	backgroundImage:'/images/dailySpecials/loyolaArea.png',
-	imageOff:'/images/dailySpecials/loyolaArea.png',
+	backgroundImage:'/images/loyolaAreaNew.png',
+	imageOff:'/images/loyolaAreaNEW.png',
 	imageOn:'/images/dailySpecials/loyolaAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
 	isToggled: false,
 	height:30,
 	width:'100%',
 	title:'Loyola',
-	top:30,
+	color:'#000',
+	top:0,
 	id: 2
 });
 
-view.add(loyolaBars);
+scrollView.add(loyolaBars);
 
 var johnsHopkinsBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/johnsHopkinsArea.png',
 	imageOff:'/images/dailySpecials/johnsHopkinsArea.png',
 	imageOn:'/images/dailySpecials/johnsHopkinsAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
 	isToggled: false,
 	height:30,
 	width:'100%',
 	title:'Johns Hopkins',
-	top:60,
+	color:'#000',
+	top:0,
 	id: 3
 });
 
-view.add(johnsHopkinsBars);
+scrollView.add(johnsHopkinsBars);
 
 var towsonBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/towsonArea.png',
 	imageOff:'/images/dailySpecials/towsonArea.png',
 	imageOn:'/images/dailySpecials/towsonAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
 	isToggled: false,
 	height:30,
 	width:'100%',
 	title:'Towson',
-	top:90,
+	color:'#000',
+	top:0,
 	id: 4
 });
 
-view.add(towsonBars);
+scrollView.add(towsonBars);
 
 
 var downtownBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalArea.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
 	imageOn:'/images/dailySpecials/generalAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
 	isToggled: false,
 	height:30,
 	width:'100%',
 	title:'Downtown',
-	top:120,
+	color:'#000',
+	top:0,
 	id: 5
 });
 
-view.add(downtownBars);
+scrollView.add(downtownBars);
 
 var federalHillBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalArea.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
 	imageOn:'/images/dailySpecials/generalAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
 	isToggled: false,
 	height:30,
 	width:'100%',
 	title:'Federal Hill',
-	top:150,
+	color:'#000',
+	top:0,
 	id: 6
 });
 
-view.add(federalHillBars);
+scrollView.add(federalHillBars);
 
 var fellsPointBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalArea.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
 	imageOn:'/images/dailySpecials/generalAreaSelected.png',
-	    isToggled: false,
-
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
+	isToggled: false,
 	height:30,
 	width:'100%',
 	title:'Fells Point',
-	top:180,
-	    id: 7
+	color:'#000',
+	top:0,
+	id: 7
 });
 
-view.add(fellsPointBars);
+scrollView.add(fellsPointBars);
 
 
 allBars.addEventListener('click', toggleButton);

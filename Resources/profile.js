@@ -2,6 +2,7 @@ var fb = Ti.UI.currentWindow;
 fb.barColor = '#3b5e34';
 fb.titleImage = 'tap.png';
 fb.barImage = '/images/navBar.png';
+fb.backgroundColor = 'e9e7e7';
 
 var facebook = require('facebook');
 
@@ -17,7 +18,7 @@ var facebook = require('facebook');
 		
 		
  var rightButton = Ti.UI.createImageView({
-   	image:'/images/settingsIcon.png',
+   	image:'/images/settingsIconNew.png',
    	width:50,
    	height:36
 });             
@@ -33,24 +34,33 @@ rightButton.addEventListener('click', function(){
 fb.rightNavButton = rightButton;
 	
 var userProfileView = Ti.UI.createView({
-	backgroundColor:'#D3FFC6',
-	top:0,
-	width:"100%",
+	backgroundColor:'#fff',
+	top:5,
+	left:10,
+	right:10,
+	width:300,
 	height:80
 });
 
 fb.add(userProfileView);
 
-var imagem = Ti.UI.createImageView({
+var profilePicture = Ti.UI.createImageView({
     image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
-     top:10,
+     top: 15,
  width:50,
  height:50,
  left:10
  
 });
-userProfileView.add(imagem);
+userProfileView.add(profilePicture);
 
+var profileGoingOutStatus = Ti.UI.createImageView({
+        top:30,
+        left:70,
+        image:'/images/statusNo.png'
+    });
+
+userProfileView.add(profileGoingOutStatus);
 
 
     Ti.Facebook.requestWithGraphPath('me', {}, 
@@ -59,7 +69,8 @@ userProfileView.add(imagem);
         var response = JSON.parse(e.result);
          var profileName = Ti.UI.createLabel({
          	text: response.name,
-         	top: 25
+         	top: 30,
+         	left: 110
          });
          var fbProfilePic = Ti.UI.createLabel({
          	image: response.picture,
@@ -85,33 +96,32 @@ userProfileView.add(imagem);
 
 //Button
 
-var attendingLabel = Ti.UI.createLabel({
-	text: "Are you going out:",
-	top:80,
-	left:10
-});
-
-fb.add(attendingLabel);
 
 
 
 var goingOutView = Ti.UI.createView({
-	right: 0,
-	width: 180,
+	backgroundColor:'#fff',
+	width: 300,
+	right: 10,
+	left: 10,
 	height: 30,
-	top: 80,
+	top: 105,
+	
 });
 
 fb.add(goingOutView);
 
 
-var profileGoingOutStatus = Ti.UI.createImageView({
-        top:25,
-        left:70,
-        image:'/images/statusNo.png'
-    });
 
-fb.add(profileGoingOutStatus);
+var attendingLabel = Ti.UI.createLabel({
+	text: "Are you going out:",
+	font: {size:14},
+	top:5,
+	left:10
+});
+
+goingOutView.add(attendingLabel);
+
 
 
 
@@ -143,9 +153,9 @@ var btn1 = Ti.UI.createButton({
     imageOn: '/images/noSelected.png',
     isToggled: true,
     status: '/images/statusNo.png',
-    width:60,
+    width:55,
 	height:30,
-    left: 0,
+    right: 110,
     id: 1
 });
 
@@ -158,9 +168,9 @@ var btn2 = Ti.UI.createButton({
     imageOn: '/images/maybeSelected.png',
     isToggled: false,
     status: '/images/statusMaybe.png',
-    width:60,
+    width:55,
 	height:30,
-    left: 60,
+    right: 55,
     id: 2
 });
 
@@ -173,9 +183,9 @@ var btn3 = Ti.UI.createButton({
     imageOn: '/images/yesSelected.png',
     isToggled: false,
     status: '/images/statusYes.png',
-    width:60,
+    width:55,
 	height:30,
-    left: 120,
+    right: 0,
     id: 3
 });
 
@@ -187,24 +197,106 @@ btn3.addEventListener('click', toggleButton);
 toggledButton = btn1; // set to on button
 
 
-
-var friendsPlansButton = Ti.UI.createButton({
-	height:60,
-	width: 200,
-});
-fb.add(friendsPlansButton);
-
-
-friendsPlansButton.addEventListener("click",function(eventObject){
- 
-    var newWindow = Titanium.UI.createWindow({
-        url:'fbFriends.js'
- 
-    });
- 
-    newWindow.open();
+var friendsGoingOutButtons = Ti.UI.createView({
+	backgroundColor:'#e9e7e7',
+	width:300,
+	height:30,
+	top:155,
+	left:10,
+	right:10
 });
 
+fb.add(friendsGoingOutButtons);
+
+var friendsGoingOutStatus = Ti.UI.createView({
+	backgroundColor:'#fff',
+	height:'100%',
+	width:300,
+	top:185,
+	left:10,
+	right:10,
+	
+});
+
+
+fb.add(friendsGoingOutStatus);
 
 
 
+
+var selectedButton;
+
+var toggle = function (e) {
+    if (e.source.isSelected === false) {
+    	selectedButton.setBackgroundImage('/images/profile/friendsGoingOutBg.png');
+    	selectedButton.isSelected = false;
+    	
+    	e.source.setBackgroundImage('/images/profile/friendsGoingOutSelected.png');
+    	e.source.isSelected = true;
+
+		selectedButton = e.source;
+		}
+		switch (e.source.id) {
+			case 1:
+			break;
+		}
+};
+
+var friendsGoingOutYes = Ti.UI.createButton({
+	backgroundImage: '/images/profile/friendsGoingOutSelected.png',
+	title:'Yes',
+	isSelected: true,
+	height: 30,
+	width: 99,
+	top: 0,
+	left: 0,
+	id: 1
+});
+
+friendsGoingOutButtons.add(friendsGoingOutYes);
+
+var friendsGoingOutMaybe = Ti.UI.createButton({
+	backgroundImage: '/images/profile/friendsGoingOutBg.png',
+	title:'Maybe',
+	isSelected: false,
+	height: 30,
+	width: 99,
+	top: 0,
+	left: 100.5,
+	right:100.5,
+	id: 2
+});
+
+friendsGoingOutButtons.add(friendsGoingOutMaybe);
+
+var friendsGoingOutNo = Ti.UI.createButton({
+	backgroundImage: '/images/profile/friendsGoingOutBg.png',
+	title:'No',
+	isSelected: false,
+	height: 30,
+	width: 99,
+	top: 0,
+	left: 201,
+	id: 3
+});
+
+friendsGoingOutButtons.add(friendsGoingOutNo);
+
+friendsGoingOutYes.addEventListener('click', toggle);
+friendsGoingOutMaybe.addEventListener('click', toggle);
+friendsGoingOutNo.addEventListener('click', toggle);
+selectedButton = friendsGoingOutYes; //Set to Selected Button
+
+
+var friendsGoingOutTable = Ti.UI.createTableView({
+	width:300,
+	top:30
+});
+
+friendsGoingOutStatus.add(friendsGoingOutTable);
+
+var friendsGoingOutTableRow = Ti.UI.createTableViewRow({
+	
+});
+
+friendsGoingOutTable.add(friendsGoingOutTableRow);

@@ -1,10 +1,11 @@
 function detail(data) {
     var self = Ti.UI.createWindow({
-        backgroundColor:'#fff',
+        backgroundColor:'#e9e7e7',
+        title: data.name,
+        font:{fontFamily: customFont}
     });
     
-    self.barColor = '#3b632f';
-    self.titleImage = 'tap.png';
+    self.barColor = '#3d6430';
 	self.barImage = '/images/navBar.png';
  
  
@@ -25,46 +26,153 @@ self.leftNavButton = ButtonRetour;
  
  var barData = [];
  
- var barName = Titanium.UI.createLabel({
- 	text: data.name,
- 	top: 10,
- 	right:0
+ 
+ var barImage = Ti.UI.createImageView({
+ 	image:data.logo_url,
+ 	height:90,
+ 	width:150,
+ 	top:5,
+ 	left:5,	
  });
  
- self.add(barName);
+ self.add(barImage);
+ 
+ var addressTitleView = Ti.UI.createView({
+ 	backgroundColor:'#3d6430',
+ 	height:20,
+ 	width:155,
+ 	top:5,
+ 	right:0,
+ });
+ 
+ self.add(addressTitleView);
+ 
+ var addressTitleLabel = Ti.UI.createLabel({
+ 	text:'ADDRESS',
+ 	color:'#fff',
+ 	font:{size:14},
+ 	right:5
+ });
+ 
+ addressTitleView.add(addressTitleLabel);
+ 
+ var addressView = Ti.UI.createView({
+ 	backgroundColor:'#fff',
+ 	height:70,
+ 	width:150,
+ 	top:25,
+ 	right:5
+ });
+ 
+ self.add(addressView);
  
  var addressLabel = Titanium.UI.createLabel({
  	text: data.address,
- 	top: 30,
- 	right:0
+ 	top: 10,
+ 	left:0
  });
  
- self.add(addressLabel);
+ addressView.add(addressLabel);
+ 
+ addressLabel.height='auto';
+ 
+ var descriptionTitleView = Ti.UI.createView({
+ 	backgroundColor:'#3d6430',
+ 	height:20,
+ 	width:155,
+ 	top:100,
+ 	left:0
+ });
+ 
+ self.add(descriptionTitleView);
+ 
+
+ var descriptionTitle = Titanium.UI.createLabel({
+ 	text: "DESCRIPTION",
+ 	color: '#fff',
+ 	font:{size:14},
+ 	left:5,
+ });
+ 
+ descriptionTitleView.add(descriptionTitle);
+ 
+ 
+ var descriptionSummaryView = Ti.UI.createScrollView({
+ 	backgroundColor:'#fff',
+ 	showVerticalScrollIndicator: true,
+ 	height:90,
+ 	width:310,
+ 	top:120,
+ 	left:5,
+ });
+ 
+ self.add(descriptionSummaryView);
+ 
+ var descriptionSummary = Ti.UI.createLabel({
+ 	text: data.description,
+ 	font: {size:12,
+ 		fontFamily: customFont}
+ });
+ 
+ descriptionSummaryView.add(descriptionSummary);
+ 
+ 
+ var specialsLabelView = Ti.UI.createScrollView({
+ 	backgroundColor:'#3d6430',
+ 	showVerticalScrollIndicator: true,
+ 	height:20,
+ 	width:155,
+ 	bottom:180,
+ 	left:0
+ });
+ 
+ self.add(specialsLabelView);
  
  var drinkSpecialsLabel = Titanium.UI.createLabel({
- 	color: '#fff',
- 	backgroundColor:'#3e6d46',
  	text: "SPECIALS",
- 	left:0,
- 	top:60,
- 	width:180
+ 	color: '#fff',
+ 	font:{size:14,
+ 		fontFamily: customFont
+ 		},
+ 	left:5,
  });
  
- self.add(drinkSpecialsLabel);
+ specialsLabelView.add(drinkSpecialsLabel);
+ 
+ 
+ var specialsLabelView = Ti.UI.createView({
+ 	backgroundColor:'#fff',
+ 	height:145,
+ 	width:312,
+ 	left:4,
+ 	right:4,
+ 	bottom:5
+ });
+ 
+ self.add(specialsLabelView);
+ 
+ //Weekly Drink Specials Label
  
 var specialsLabel = Ti.UI.createLabel({
-	bottom:30,
-	backgroundColor:'#e3e3e3'
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE,
+	top:0,
+	left:0,
+	textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	font:{fontFamily: customFont},
+	layout:'horizontal'
 });
 
-self.add(specialsLabel); 
+specialsLabelView.add(specialsLabel); 
  
+ 
+//END Weekly Drink Specials Label 
  
  var fonts = {
     button: {
         fontSize: 10,
         fontWeight: 'bold',
-        fontFamily: 'Helvetica Neue'
+		fontFamily: customFont
     }
 };
 var buttons = {
@@ -87,12 +195,12 @@ lastbutton = e.source; // here
 var mondayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Mon',
-	width: 46,
 	height: 30,
-	bottom: 160,
-	left:0,
+	width: 45,
+	bottom: 150,
+	left: 4,
 	special: data.mon_special,
-	    font: fonts.button,
+	font: fonts.button,
 });
 
 self.add(mondayButton); 
@@ -102,10 +210,10 @@ mondayButton.addEventListener('click', toggle);
 var tuesdayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Tues',
-	width: 46,
 	height: 30,
-	bottom: 160,
-	left:45,
+	width: 45,
+	bottom: 150,
+	left:46,
 	special: data.tue_special,
 	font: fonts.button	
 });
@@ -117,15 +225,15 @@ tuesdayButton.addEventListener('click', toggle);
  
 var wednesdayButton = Ti.UI.createButton({
     backgroundImage: buttons.unselected,
-    bottom: 160,
-    left: 90,
-    width: 46,
-    height: 30,
-    font: fonts.button,
-    special: data.wed_special,
     title: 'Weds',
-    
+    height: 30,
+    width: 45,
+    bottom: 150,
+    left: 91,
+    special: data.wed_special,
+    font: fonts.button
 }); 
+
 self.add(wednesdayButton); 
 wednesdayButton.addEventListener('click', toggle);
  
@@ -133,15 +241,15 @@ wednesdayButton.addEventListener('click', toggle);
  
 var thursdayButton = Ti.UI.createButton({
     backgroundImage: buttons.unselected,
-    bottom: 160,
-    left: 135,
-    height: 30,
-    width: 46,
-    font: fonts.button,
     title: 'Thurs',
+    height: 30,
+    width: 45,
+    bottom: 150,
+    left: 136,
     special: data.thu_special,
-
+	font: fonts.button
 });
+
 self.add(thursdayButton); 
 thursdayButton.addEventListener('click', toggle);
 
@@ -152,17 +260,15 @@ thursdayButton.addEventListener('click', toggle);
 var fridayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Fri',
-	width: 46,
 	height: 30,
-	bottom: 160,
-	left:180,
+	width: 45,
+	bottom: 150,
+	left:181,
 	special: data.fri_special,
-	    font: fonts.button,
-
+	font: fonts.button,
 });
 
 self.add(fridayButton); 
-
 fridayButton.addEventListener('click', toggle);
  	
 
@@ -171,17 +277,14 @@ var saturdayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Sat',
 	height: 30,
-	width: 46,
-	bottom: 160,
-	left:225,
+	width: 45,
+	bottom: 150,
+	left:226,
 	special: data.sat_special,
-	    font: fonts.button,
-
-
+	font: fonts.button,
 });
 
 self.add(saturdayButton); 
-
 saturdayButton.addEventListener('click', toggle);
 
 
@@ -189,17 +292,15 @@ saturdayButton.addEventListener('click', toggle);
 var sundayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Sun',
-	width: 46,
 	height: 30,
-	bottom: 160,
-	left:270,
+	width: 45,
+	bottom: 150,
+	right:4,
 	special: data.sun_special,
-	    font: fonts.button,
-
+	font: fonts.button,
 });
 
 self.add(sundayButton); 
-
 sundayButton.addEventListener('click', toggle);
  	
 

@@ -3,11 +3,14 @@ win.barColor = '#3b5e34';
 win.titleImage = 'tap.png';
 win.barImage = '/images/navBar.png';
 
+var customFont = 'HouschkaAlt';
+
 
 var data = [],
     // This requires the detail window that you will
     // open each time a row is clicked.
-    Detail = require('detail');
+    Detail = require('barDetail');
+ 
  
 var barList = Titanium.UI.createTableView({
     height: 366,
@@ -37,7 +40,8 @@ xhr.onload = function () {
             text: json[i].bar.name,
             font: {
                 fontSize: 14,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontFamily: customFont
             },
             left: 70,
             top: 5,
@@ -46,10 +50,11 @@ xhr.onload = function () {
         });
         row.add(titleLabel);
         var addressLabel = Titanium.UI.createLabel({
-            text: json[i].bar.address,
+            text: json[i].bar.address + ", " + json[i].bar.city,
             font: {
                 fontSize: 10,
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                fontFamily: customFont
             },
             left: 70,
             top: 25,
@@ -57,9 +62,9 @@ xhr.onload = function () {
             width: 200
         });
         row.add(addressLabel);
-        var urlPrefix = 'https://s3.amazonaws.com/campustaps/bars/';
+        
         var iconImage = Titanium.UI.createImageView({
-            image: urlPrefix + json[i].bar.logo_file_name,
+            image: json[i].bar.logo_url,
             width: 50,
             height: 50,
             left: 10,

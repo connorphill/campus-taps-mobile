@@ -4,6 +4,9 @@ settings.title = "Profile Settings";
 settings.barImage = '/images/navBar.png';
 settings.backgroundColor = '#e9e7e7';
 
+var customFont = 'HouschkaAlt';
+
+
 var ButtonRetour = Ti.UI.createImageView({
    	image:'/images/backButton.png',
    	width:50,
@@ -27,10 +30,12 @@ var socialSettings = Titanium.UI.createTableViewSection();
 socialSettings.headerTitle = "SOCIAL SETTINGS";
 var findFriends = Titanium.UI.createTableViewRow({
 	title:"Find Your Friends",
+	font:{fontFamily: customFont},
 	backgroundColor:'#fff'
 	});
 var inviteFriends = Titanium.UI.createTableViewRow({
 	title:"Invite Friends",
+	font:{fontFamily: customFont},
 	backgroundColor:'#fff'
 
 });
@@ -44,10 +49,12 @@ var supportSettings = Titanium.UI.createTableViewSection();
 supportSettings.headerTitle = "SUPPORT SETTINGS";
 var privacyPolicy = Titanium.UI.createTableViewRow({
 	title:"Privacy Policy",
+	font:{fontFamily: customFont},
 	backgroundColor:'#fff'
 });
 var termsOfUse = Titanium.UI.createTableViewRow({
 	title:"Terms of Service",
+	font:{fontFamily: customFont},
 	backgroundColor:'#fff'
 	});
 
@@ -100,8 +107,10 @@ termsOfUseWindow.leftNavButton = ButtonRetour;
 
 var profileSettings = Titanium.UI.createTableViewSection();
 profileSettings.headerTitle = "PROFILE SETTINGS";
+
 var logOut = Ti.UI.createTableViewRow({
 	title: "Log Out",
+	font:{fontFamily: customFont},
 	backgroundColor:'#fff'
 });
 
@@ -124,6 +133,8 @@ findFriends.addEventListener('click', function(){
 logOut.addEventListener('click', function() {
 if(Titanium.Facebook.loggedIn){
     Titanium.Facebook.logout();
+
+
     var loginWindow = Ti.UI.createWindow({
   	url:'login.js',
   	navBarHidden: true,

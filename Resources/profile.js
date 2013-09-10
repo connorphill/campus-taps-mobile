@@ -1,10 +1,14 @@
 var fb = Ti.UI.currentWindow;
-fb.barColor = '#3b5e34';
+fb.barColor = '#3d6430';
 fb.titleImage = 'tap.png';
 fb.barImage = '/images/navBar.png';
-fb.backgroundColor = 'e9e7e7';
+fb.backgroundColor = '#e9e7e7';
+
+var customFont = 'HouschkaAlt';
+
 
 var facebook = require('facebook');
+var Cloud = require('ti.cloud');
 
 
 
@@ -69,12 +73,17 @@ userProfileView.add(profileGoingOutStatus);
         var response = JSON.parse(e.result);
          var profileName = Ti.UI.createLabel({
          	text: response.name,
+         	font:{fontFamily: customFont},
          	top: 30,
          	left: 110
          });
-         var fbProfilePic = Ti.UI.createLabel({
+         var fbProfilePic = Ti.UI.createImageView({
          	image: response.picture,
-         	top: 50
+         	width:50,
+         	height:50,
+         	top: 0,
+         	right: 10,
+         	
          });
       
     	} else if (e.error) {
@@ -93,12 +102,6 @@ userProfileView.add(profileGoingOutStatus);
 //Going Out Status
 
 
-
-//Button
-
-
-
-
 var goingOutView = Ti.UI.createView({
 	backgroundColor:'#fff',
 	width: 300,
@@ -115,7 +118,8 @@ fb.add(goingOutView);
 
 var attendingLabel = Ti.UI.createLabel({
 	text: "Are you going out:",
-	font: {size:14},
+	font: {size:14,
+		fontFamily: customFont},
 	top:5,
 	left:10
 });
@@ -139,63 +143,135 @@ var toggleButton = function (e) {
         // cache current button as previous button
         toggledButton = e.source;
     }
+    
+    //CUSTOM OBJECT EVENTS FOR EACH STATE
+    
     switch (e.source.id) {
     case 1:
-        // do something specific
+    
+	Cloud.Objects.create({
+          classname : 'goingOutTonight',
+          fields : {
+            going_out: 'No'
+          }
+        }, function(e) {
+          if(e.success) {
+          	var goingOut = e.goingOutTonight[0];
+            alert("created" + 'id:' + goingOut.id + 'going_out:' + goingOut.going_out);
+          } else {
+            alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
+          }
+        }); 
+		
         break;
+        
+        case 2: 
+        Cloud.Objects.update({
+          classname : 'goingOutTonight',
+          going_out_id: going_outID,
+          fields : {
+            going_out: 'Maybe'
+          }
+        }, function(e) {
+          if(e.success) {
+          	var goingOut = e.goingOutTonight[0];
+
+            alert("Updated");
+          } else {
+            alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
+          }
+        }); 
+        
+        break;
+        
+        case 3:
+        
+        Cloud.Objects.update({
+          classname : 'goingOutTonight',
+          id: goingOut.id,
+          fields : {
+            going_out: 'Yes'
+          }
+        }, function(e) {
+          if(e.success) {
+            alert("Updated");
+          } else {
+            alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
+          }
+        }); 
+        
     }
+    
 };
 
-var btn1 = Ti.UI.createButton({
+//END CUSTOM OBJECT EVENTS FOR EACH STATE
+
+
+
+
+
+
+
+
+var goingOutNo = Ti.UI.createButton({
     title: 'No',
     backgroundImage: '/images/noSelected.png',
     imageOff: '/images/nobg.png',
     imageOn: '/images/noSelected.png',
     isToggled: true,
     status: '/images/statusNo.png',
+    font:{fontFamily: customFont},
     width:55,
 	height:30,
     right: 110,
     id: 1
 });
 
-goingOutView.add(btn1);
+goingOutView.add(goingOutNo);
 
-var btn2 = Ti.UI.createButton({
+var goingOutMaybe = Ti.UI.createButton({
     title: 'Maybe',
     backgroundImage: '/images/maybebg.png',
     imageOff: '/images/maybebg.png',
     imageOn: '/images/maybeSelected.png',
     isToggled: false,
     status: '/images/statusMaybe.png',
+    font:{fontFamily: customFont},
     width:55,
 	height:30,
     right: 55,
     id: 2
 });
 
-goingOutView.add(btn2);
+goingOutView.add(goingOutMaybe);
 
-var btn3 = Ti.UI.createButton({
+var goingOutYes = Ti.UI.createButton({
     title: 'Yes',
     backgroundImage: '/images/yesbg.png',
     imageOff: '/images/yesbg.png',
     imageOn: '/images/yesSelected.png',
     isToggled: false,
     status: '/images/statusYes.png',
+    font:{fontFamily: customFont},
     width:55,
 	height:30,
     right: 0,
     id: 3
 });
 
-goingOutView.add(btn3);
+goingOutView.add(goingOutYes);
 
-btn1.addEventListener('click', toggleButton);
-btn2.addEventListener('click', toggleButton);
-btn3.addEventListener('click', toggleButton);
-toggledButton = btn1; // set to on button
+goingOutNo.addEventListener('click', toggleButton);
+goingOutMaybe.addEventListener('click', toggleButton);
+goingOutYes.addEventListener('click', toggleButton);
+toggledButton = goingOutNo; // set to on button
 
+
+//END GOING OUT STATUS
+
+
+
+//GOING OUT FRIENDS TABLE
 
 var friendsGoingOutButtons = Ti.UI.createView({
 	backgroundColor:'#e9e7e7',
@@ -238,14 +314,17 @@ var toggle = function (e) {
 		}
 		switch (e.source.id) {
 			case 1:
+			
 			break;
 		}
 };
+
 
 var friendsGoingOutYes = Ti.UI.createButton({
 	backgroundImage: '/images/profile/friendsGoingOutSelected.png',
 	title:'Yes',
 	isSelected: true,
+	font:{fontFamily: customFont},
 	height: 30,
 	width: 99,
 	top: 0,
@@ -259,6 +338,7 @@ var friendsGoingOutMaybe = Ti.UI.createButton({
 	backgroundImage: '/images/profile/friendsGoingOutBg.png',
 	title:'Maybe',
 	isSelected: false,
+	font:{fontFamily: customFont},
 	height: 30,
 	width: 99,
 	top: 0,
@@ -273,6 +353,7 @@ var friendsGoingOutNo = Ti.UI.createButton({
 	backgroundImage: '/images/profile/friendsGoingOutBg.png',
 	title:'No',
 	isSelected: false,
+	font:{fontFamily: customFont},
 	height: 30,
 	width: 99,
 	top: 0,
@@ -281,6 +362,17 @@ var friendsGoingOutNo = Ti.UI.createButton({
 });
 
 friendsGoingOutButtons.add(friendsGoingOutNo);
+
+var friendsSpacer = Ti.UI.createImageView({
+	image:'/images/profile/spacer.png',
+	height:4,
+	width:300,
+	left:0,
+	top:26
+});
+
+friendsGoingOutButtons.add(friendsSpacer);
+
 
 friendsGoingOutYes.addEventListener('click', toggle);
 friendsGoingOutMaybe.addEventListener('click', toggle);
@@ -300,3 +392,7 @@ var friendsGoingOutTableRow = Ti.UI.createTableViewRow({
 });
 
 friendsGoingOutTable.add(friendsGoingOutTableRow);
+
+
+
+//END FRIENDS GOING OUT TABLE

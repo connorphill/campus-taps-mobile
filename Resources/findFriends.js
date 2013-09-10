@@ -1,5 +1,8 @@
 var Cloud = require('ti.cloud');
 
+var session_id = Ti.App.Properties.getString('session_id');
+
+
 var friends = Ti.UI.currentWindow;
 friends.barColor = '#3b5e34';
 friends.title = "Friends";
@@ -36,3 +39,4 @@ Cloud.SocialIntegrations.searchFacebookFriends(function (e){
             ((e.error && e.message) || JSON.stringify(e)));
     }
 });
+

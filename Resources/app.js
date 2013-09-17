@@ -33,13 +33,12 @@ var tabGroup = Titanium.UI.createTabGroup();
 //
 var dailySpecials = Ti.UI.createWindow({
 	backgroundColor: '#fff',
-	barImage:'/images/barNav.png',
 	url:'dailySpecials.js'
 });
 
 var dailySpecialsTab = Titanium.UI.createTab({  
-    icon:'',
-    title:'Daily Specials',
+    icon:'/images/icons/todaysSpecialsIcon.png',
+    title:'Today\'s Specials',
     window:dailySpecials
 });
 
@@ -50,7 +49,7 @@ var eventsFeed = Ti.UI.createWindow({
 });
 
 var eventsFeedTab = Titanium.UI.createTab({  
-    icon:'',
+    icon:'/images/icons/eventsFeedIcon.png',
     title:'Events Feed',
     window:eventsFeed
 });
@@ -67,7 +66,7 @@ var bars = Titanium.UI.createWindow({
     url:'bars.js'
 });
 var barsTab = Titanium.UI.createTab({  
-    icon:'',
+    icon:'/images/icons/barsIcon.png',
     title:'Bars',
     color:'#000',
     window:bars
@@ -80,7 +79,7 @@ var profile = Titanium.UI.createWindow({
     url:'profile.js'
 });
 var profileTab = Titanium.UI.createTab({  
-    icon:'',
+    icon:'/images/icons/profileIcon.png',
     title:'Profile',
     color:'#000',
     window:profile

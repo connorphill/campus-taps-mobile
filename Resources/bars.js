@@ -50,7 +50,7 @@ xhr.onload = function () {
         });
         row.add(titleLabel);
         var addressLabel = Titanium.UI.createLabel({
-            text: json[i].bar.address + ", " + json[i].bar.city,
+            text: json[i].bar.address + ", " + json[i].bar.city + ", MD",
             font: {
                 fontSize: 10,
                 fontWeight: 'normal',

@@ -29,10 +29,10 @@ self.leftNavButton = ButtonRetour;
  
  var barImage = Ti.UI.createImageView({
  	image:data.logo_url,
- 	height:90,
- 	width:150,
+ 	height:95,
+ 	width:149,
  	top:5,
- 	left:5,	
+ 	left:6,	
  });
  
  self.add(barImage);
@@ -50,7 +50,7 @@ self.leftNavButton = ButtonRetour;
  var addressTitleLabel = Ti.UI.createLabel({
  	text:'ADDRESS',
  	color:'#fff',
- 	font:{size:14},
+ 	font:{size:14, fontFamily: customFont},
  	right:5
  });
  
@@ -60,16 +60,19 @@ self.leftNavButton = ButtonRetour;
  	backgroundColor:'#fff',
  	height:70,
  	width:150,
- 	top:25,
+ 	top:30,
  	right:5
  });
  
  self.add(addressView);
  
  var addressLabel = Titanium.UI.createLabel({
- 	text: data.address,
+ 	text: data.address + "\n" + data.city + ", MD",
+ 	height:Ti.UI.SIZE,
+ 	width:Ti.UI.SIZE,
+ 	font:{size:20, fontWeight: 'bold', fontFamily: customFont},
  	top: 10,
- 	left:0
+ 	left:5
  });
  
  addressView.add(addressLabel);
@@ -80,7 +83,7 @@ self.leftNavButton = ButtonRetour;
  	backgroundColor:'#3d6430',
  	height:20,
  	width:155,
- 	top:100,
+ 	top:110,
  	left:0
  });
  
@@ -90,7 +93,7 @@ self.leftNavButton = ButtonRetour;
  var descriptionTitle = Titanium.UI.createLabel({
  	text: "DESCRIPTION",
  	color: '#fff',
- 	font:{size:14},
+ 	font:{size:14, fontFamily: customFont},
  	left:5,
  });
  
@@ -102,7 +105,7 @@ self.leftNavButton = ButtonRetour;
  	showVerticalScrollIndicator: true,
  	height:90,
  	width:310,
- 	top:120,
+ 	top:135,
  	left:5,
  });
  
@@ -122,7 +125,7 @@ self.leftNavButton = ButtonRetour;
  	showVerticalScrollIndicator: true,
  	height:20,
  	width:155,
- 	bottom:180,
+ 	bottom:165,
  	left:0
  });
  
@@ -142,11 +145,11 @@ self.leftNavButton = ButtonRetour;
  
  var specialsLabelView = Ti.UI.createView({
  	backgroundColor:'#fff',
- 	height:145,
- 	width:312,
- 	left:4,
- 	right:4,
- 	bottom:5
+ 	height:120,
+ 	width:308,
+ 	left:6,
+ 	right:6,
+ 	bottom:10
  });
  
  self.add(specialsLabelView);
@@ -176,8 +179,8 @@ specialsLabelView.add(specialsLabel);
     }
 };
 var buttons = {
-    selected: '/images/selectedDay.png',
-    unselected: '/images/bgDay.png'
+    selected: '/images/barDetail/specialSelected.png',
+    unselected: '/images/barDetail/specialUnSelected.png'
 };
 var lastbutton = undefined;
 
@@ -190,20 +193,30 @@ var toggle = function (e) {
 lastbutton = e.source; // here
 };
  
- 
+var dayButtonView = Ti.UI.createView({
+	backgroundColor:'#fff',
+	height:30,
+	width:308,
+	bottom:130,
+	left:6,
+	right:6
+});
+
+self.add(dayButtonView);
  
 var mondayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Mon',
 	height: 30,
-	width: 45,
-	bottom: 150,
-	left: 4,
+	width: 44,
+	bottom: 0,
+	left: 0,
 	special: data.mon_special,
 	font: fonts.button,
 });
 
-self.add(mondayButton); 
+dayButtonView.add(mondayButton);
+ 
 mondayButton.addEventListener('click', toggle);
  	
 
@@ -211,14 +224,15 @@ var tuesdayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Tues',
 	height: 30,
-	width: 45,
-	bottom: 150,
-	left:46,
+	width: 44,
+	bottom: 0,
+	left:44,
 	special: data.tue_special,
 	font: fonts.button	
 });
 
-self.add(tuesdayButton); 
+dayButtonView.add(tuesdayButton); 
+
 tuesdayButton.addEventListener('click', toggle);
 
 
@@ -227,14 +241,15 @@ var wednesdayButton = Ti.UI.createButton({
     backgroundImage: buttons.unselected,
     title: 'Weds',
     height: 30,
-    width: 45,
-    bottom: 150,
-    left: 91,
+    width: 44,
+    bottom: 0,
+    left: 88,
     special: data.wed_special,
     font: fonts.button
 }); 
 
-self.add(wednesdayButton); 
+dayButtonView.add(wednesdayButton); 
+
 wednesdayButton.addEventListener('click', toggle);
  
 
@@ -243,14 +258,15 @@ var thursdayButton = Ti.UI.createButton({
     backgroundImage: buttons.unselected,
     title: 'Thurs',
     height: 30,
-    width: 45,
-    bottom: 150,
-    left: 136,
+    width: 44,
+    bottom: 0,
+    left: 132,
     special: data.thu_special,
 	font: fonts.button
 });
 
-self.add(thursdayButton); 
+dayButtonView.add(thursdayButton); 
+
 thursdayButton.addEventListener('click', toggle);
 
 
@@ -261,14 +277,15 @@ var fridayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Fri',
 	height: 30,
-	width: 45,
-	bottom: 150,
-	left:181,
+	width: 44,
+	bottom: 0,
+	left:176,
 	special: data.fri_special,
 	font: fonts.button,
 });
 
-self.add(fridayButton); 
+dayButtonView.add(fridayButton); 
+
 fridayButton.addEventListener('click', toggle);
  	
 
@@ -277,14 +294,15 @@ var saturdayButton = Ti.UI.createButton({
 	backgroundImage: buttons.unselected,
 	title: 'Sat',
 	height: 30,
-	width: 45,
-	bottom: 150,
-	left:226,
+	width: 44,
+	bottom: 0,
+	left:220,
 	special: data.sat_special,
 	font: fonts.button,
 });
 
-self.add(saturdayButton); 
+dayButtonView.add(saturdayButton); 
+
 saturdayButton.addEventListener('click', toggle);
 
 
@@ -294,13 +312,14 @@ var sundayButton = Ti.UI.createButton({
 	title: 'Sun',
 	height: 30,
 	width: 45,
-	bottom: 150,
-	right:4,
+	bottom: 0,
+	left:264,
 	special: data.sun_special,
 	font: fonts.button,
 });
 
-self.add(sundayButton); 
+dayButtonView.add(sundayButton); 
+
 sundayButton.addEventListener('click', toggle);
  	
 

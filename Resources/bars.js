@@ -1,7 +1,7 @@
 var win = Ti.UI.currentWindow;
-win.barColor = '#3b5e34';
+win.barColor = '#3d6430';
 win.titleImage = 'tap.png';
-win.barImage = '/images/navBar.png';
+win.translucent = false;
 
 var customFont = 'HouschkaAlt';
 

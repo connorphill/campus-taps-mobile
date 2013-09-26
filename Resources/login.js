@@ -1,9 +1,9 @@
 var Cloud = require('ti.cloud');
 
 var fb = require('facebook');
-Titanium.Facebook.appid = "320766681373313";//Production
-Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
- 
+fb.appid = "125520310866488";//Production
+fb.permissions = ['read_stream'];
+fb.forceDialogAuth = true;
 
 
 var win = Ti.UI.currentWindow;
@@ -18,7 +18,7 @@ var campusTapsLogo = Ti.UI.createImageView({
 });
 win.add(campusTapsLogo); 
  
-var fbSignupBtn = Ti.Facebook.createLoginButton({
+var fbSignupBtn = fb.createLoginButton({
     bottom: 50,
     style : Ti.Facebook.BUTTON_STYLE_WIDE
 });
@@ -27,11 +27,13 @@ win.add(fbSignupBtn);
 
 
  
- Titanium.Facebook.addEventListener('login', function(e) {
+ fb.createLoginButton.addEventListener('login', function(e) {
 	if (e.success) {
+		
+		
 		Cloud.SocialIntegrations.externalAccountLogin({
 			type : 'facebook',
-			token : Ti.Facebook.accessToken
+			token : fb.accessToken
 		}, function(e) {
 			
 			if (e.success) {
@@ -40,9 +42,12 @@ win.add(fbSignupBtn);
 				Ti.App.Properties.setString('currentUser_id', e.id);
 				Ti.App.Properties.setString('session_id', Cloud.sessionId);
 				Ti.App.Properties.setString('username', e.username);
+				Ti.App.Properties.setString('photo', e.photo);
 				Ti.API.info('Success: ' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 				
-				win.close();			
+								win.close();
+
+						
 			} else {
 				alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
 				

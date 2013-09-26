@@ -1,25 +1,26 @@
-var fb = Ti.UI.currentWindow;
-fb.barColor = '#3d6430';
-fb.titleImage = 'tap.png';
-fb.barImage = '/images/navBar.png';
-fb.backgroundColor = '#e9e7e7';
+var profile = Ti.UI.currentWindow;
+profile.barColor = '#3d6430';
+profile.titleImage = 'tap.png';
+profile.backgroundColor = '#e9e7e7';
+profile.translucent = '#3d6430';
 
 var customFont = 'HouschkaAlt';
 
 
-var facebook = require('facebook');
+var fb = require('facebook');
 var Cloud = require('ti.cloud');
-
+Cloud.debug = true;
 
 
 //START Facebook Code
-        Ti.Facebook.authorize();
+        
 
-//create your facebook sessionf
+//Create Facebook Session
 
-		Titanium.Facebook.appid = '320766681373313';
-		Titanium.Facebook.permissions = ['read_stream']; //Permissions your app need
+		fb.appid = '125520310866488';
+		fb.permissions = ['read_stream']; //Permissions your app need
 		
+//End Facebook Session		
 		
  var rightButton = Ti.UI.createImageView({
    	image:'/images/settingsIconNew.png',
@@ -35,7 +36,7 @@ rightButton.addEventListener('click', function(){
 	 Ti.UI.currentTab.open(settingsWindow);
 });
  
-fb.rightNavButton = rightButton;
+profile.rightNavButton = rightButton;
 	
 var userProfileView = Ti.UI.createView({
 	backgroundColor:'#fff',
@@ -46,7 +47,7 @@ var userProfileView = Ti.UI.createView({
 	height:80
 });
 
-fb.add(userProfileView);
+profile.add(userProfileView);
 
 var profilePicture = Ti.UI.createImageView({
     image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
@@ -58,6 +59,23 @@ var profilePicture = Ti.UI.createImageView({
 });
 userProfileView.add(profilePicture);
 
+
+Cloud.Photos.create({
+    photo: profilePicture.toImage()
+}, function (e) {
+    if (e.success) {
+        var photo = e.photos[0];
+        alert('Success:\n' +
+            'id: ' + photo.id + '\n' +
+            'filename: ' + photo.filename + '\n' +
+            'size: ' + photo.size,
+            'updated_at: ' + photo.updated_at);
+    } else {
+        alert('Error:\n' +
+            ((e.error && e.message) || JSON.stringify(e)));
+    }
+});
+
 var profileGoingOutStatus = Ti.UI.createImageView({
         top:30,
         left:70,
@@ -67,36 +85,32 @@ var profileGoingOutStatus = Ti.UI.createImageView({
 userProfileView.add(profileGoingOutStatus);
 
 
-    Ti.Facebook.requestWithGraphPath('me', {}, 
+  fb.requestWithGraphPath('me', {}, 
          "GET", function(e) {
     if (e.success) {
         var response = JSON.parse(e.result);
          var profileName = Ti.UI.createLabel({
-         	text: response.name,
-         	font:{fontFamily: customFont},
-         	top: 30,
-         	left: 110
+         text: response.name,
+         top: 35,
+         left: 110
          });
-         var fbProfilePic = Ti.UI.createImageView({
-         	image: response.picture,
-         	width:50,
-         	height:50,
-         	top: 0,
-         	right: 10,
-         	
-         });
-      
-    	} else if (e.error) {
+ 
+    } else if (e.error) {
+ 
                         alert("Error = "+e.error);
+ 
                     } else {
+ 
                         alert('Unknown response');
+ 
                     }
+ 
                     userProfileView.add(profileName);
-                    userProfileView.add(fbProfilePic);
-
+ 
+ 
+ 
+ 
                 });
-
-
 
 
 //Going Out Status
@@ -112,7 +126,7 @@ var goingOutView = Ti.UI.createView({
 	
 });
 
-fb.add(goingOutView);
+profile.add(goingOutView);
 
 
 
@@ -127,7 +141,7 @@ var attendingLabel = Ti.UI.createLabel({
 goingOutView.add(attendingLabel);
 
 
-
+	
 
 var toggledButton;
 var toggleButton = function (e) {
@@ -147,6 +161,8 @@ var toggleButton = function (e) {
     //CUSTOM OBJECT EVENTS FOR EACH STATE
     
     switch (e.source.id) {
+    
+    //START "No" Button State functions
     case 1:
     
 	Cloud.Objects.create({
@@ -158,25 +174,31 @@ var toggleButton = function (e) {
           if(e.success) {
           	var goingOut = e.goingOutTonight[0];
             alert("created" + 'id:' + goingOut.id + 'going_out:' + goingOut.going_out);
+            Ti.App.Properties.setString('goingOut', goingOut.id);
           } else {
             alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
           }
         }); 
 		
+		
+	
+
+		
         break;
         
+        //END "No" Button State functions
+        
+        //START "Maybe" Button State functions
         case 2: 
         Cloud.Objects.update({
           classname : 'goingOutTonight',
-          going_out_id: going_outID,
+          id: Ti.App.Properties.getString('goingOut'),
           fields : {
             going_out: 'Maybe'
-          }
+          },
+          acl_name: 'going_out_acls'
         }, function(e) {
           if(e.success) {
-          	var goingOut = e.goingOutTonight[0];
-
-            alert("Updated");
           } else {
             alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
           }
@@ -184,22 +206,26 @@ var toggleButton = function (e) {
         
         break;
         
+        //END "Maybe" Button State functions
+
+        //START "Yes" Button State functions
         case 3:
         
         Cloud.Objects.update({
           classname : 'goingOutTonight',
-          id: goingOut.id,
+          id: Ti.App.Properties.getString('goingOut'),
           fields : {
             going_out: 'Yes'
           }
         }, function(e) {
           if(e.success) {
-            alert("Updated");
           } else {
             alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
           }
         }); 
         
+      	//END "Maybe" Button State functions
+
     }
     
 };
@@ -282,7 +308,7 @@ var friendsGoingOutButtons = Ti.UI.createView({
 	right:10
 });
 
-fb.add(friendsGoingOutButtons);
+profile.add(friendsGoingOutButtons);
 
 var friendsGoingOutStatus = Ti.UI.createView({
 	backgroundColor:'#fff',
@@ -295,7 +321,7 @@ var friendsGoingOutStatus = Ti.UI.createView({
 });
 
 
-fb.add(friendsGoingOutStatus);
+profile.add(friendsGoingOutStatus);
 
 
 

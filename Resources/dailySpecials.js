@@ -1,14 +1,10 @@
 var daily = Ti.UI.currentWindow;
 daily.barColor = '#3d6430';
 daily.titleImage = 'tap.png';
-daily.barImage = '/images/navBar.png';
 daily.backgroundColor = '#e9e7e7';
-
-
+daily.translucent = false;
 var customFont = 'HouschkaAlt';
 
-
-//NOT FINISHED, JUST IMPLEMENTED
 
 var data = [];
 
@@ -29,8 +25,8 @@ var barView = Ti.UI.createView({
     		filter: json[i].bar.name
     		});
     		
-    		
-    	
+//START Name of Bar    		
+
  var barNameLabel = Ti.UI.createLabel({
 	text:json[i].bar.name,
 	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
@@ -46,6 +42,9 @@ var barView = Ti.UI.createView({
 
 barView.add(barNameLabel);
 
+//END of Name of Bar
+
+//START Bar Profile Image
 
 var barImage = Ti.UI.createImageView({
 	image: json[i].bar.logo_url,
@@ -55,6 +54,10 @@ var barImage = Ti.UI.createImageView({
 });
 
 barView.add(barImage);
+
+//END of Bar Profile Image
+
+//START Daily Drink Specials
 
 var drinkSpecialsView = Ti.UI.createScrollView({
 	backgroundColor:'#000',
@@ -68,6 +71,10 @@ var drinkSpecialsView = Ti.UI.createScrollView({
 });
 
 barView.add(drinkSpecialsView);
+
+//END Daily Drink Specials
+
+// START Bars Daily Drink Specials
 
 var drinkSpecialsLabel = Ti.UI.createLabel({
 	text:json[i].bar.mon_special,
@@ -83,7 +90,10 @@ drinkSpecialsView.add(drinkSpecialsLabel);
         data.push(barView);
     }
     
-    
+//END Bars Daily Drink Specials
+
+//START Content Slider Element (Element #1)
+   
 var contentSlider = Ti.UI.createScrollableView({
 	scrollType:'horizontal',
 	views:data,
@@ -97,25 +107,14 @@ daily.add(contentSlider);
 
 };
 
+
 xhr.open('GET', 'http://campustaps.com/bars.json');
 xhr.send();
 
 
+//END Content Slider Element (Element #1)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//END NOT FINISHED, JUST IMPLEMENTED
+//START Attending Label and Button (Element #2)
 
 var attendingView = Ti.UI.createView({
 	backgroundColor:'#fff',
@@ -128,6 +127,7 @@ var attendingView = Ti.UI.createView({
 
 daily.add(attendingView);
 
+
 var attendingLabel = Ti.UI.createLabel({
 	text:'Where are you heading tonight?',
 	font:{fontFamily: customFont},
@@ -136,6 +136,8 @@ var attendingLabel = Ti.UI.createLabel({
 });
 
 attendingView.add(attendingLabel);
+
+//START "HERE" Button
 
 var attendingButton = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/attendingButton.png',
@@ -149,6 +151,11 @@ var attendingButton = Ti.UI.createButton({
 
 attendingView.add(attendingButton);
 
+//END "HERE" Button
+
+//END Attending Label and Button (Element #2)
+
+//START Area Buttons view (Element #3)
 
 var scrollView = Ti.UI.createScrollView({
   contentWidth: Ti.UI.FILL, // changed
@@ -163,7 +170,9 @@ var scrollView = Ti.UI.createScrollView({
 
 daily.add(scrollView);
 
+//END Area Buttons view
 
+//START Button toggle function and selected button cases
 
 var toggledButton;
 var toggleButton = function (e) {
@@ -188,7 +197,7 @@ var toggleButton = function (e) {
 };
 
 
-
+//END Button toggle function and selected button cases
 
 
 var allBars = Ti.UI.createButton({
@@ -208,24 +217,6 @@ var allBars = Ti.UI.createButton({
 
 scrollView.add(allBars);
 
-var loyolaBars = Ti.UI.createButton({
-	backgroundImage:'/images/loyolaAreaNew.png',
-	imageOff:'/images/loyolaAreaNEW.png',
-	imageOn:'/images/dailySpecials/loyolaAreaSelected.png',
-	fontOff:{color:'#fff'},
-	fontOn:{color:'#fff'},
-	isToggled: false,
-	height:30,
-	width:'100%',
-	title:'Loyola',
-	font:{fontFamily: customFont},
-	color:'#000',
-	top:0,
-	id: 2
-});
-
-scrollView.add(loyolaBars);
-
 var johnsHopkinsBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/johnsHopkinsArea.png',
 	imageOff:'/images/dailySpecials/johnsHopkinsArea.png',
@@ -239,10 +230,30 @@ var johnsHopkinsBars = Ti.UI.createButton({
 	font:{fontFamily: customFont},
 	color:'#000',
 	top:0,
-	id: 3
+	id: 2
 });
 
 scrollView.add(johnsHopkinsBars);
+
+var loyolaBars = Ti.UI.createButton({
+	backgroundImage:'/images/loyolaAreaNew.png',
+	imageOff:'/images/loyolaAreaNEW.png',
+	imageOn:'/images/dailySpecials/loyolaAreaSelected.png',
+	fontOff:{color:'#fff'},
+	fontOn:{color:'#fff'},
+	isToggled: false,
+	height:30,
+	width:'100%',
+	title:'Loyola',
+	font:{fontFamily: customFont},
+	color:'#000',
+	top:0,
+	id: 3
+});
+
+scrollView.add(loyolaBars);
+
+
 
 var towsonBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/towsonArea.png',

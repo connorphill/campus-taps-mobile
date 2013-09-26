@@ -1,16 +1,17 @@
 var events = Ti.UI.currentWindow;
 events.barColor = '#3b5e34';
 events.backgroundColor = '#fff';
-events.barImage = '/images/navBar.png';
+events.translucent = false;
 
 var tabbedBar = Ti.UI.iOS.createTabbedBar({
 	labels:['Friends', 'Top Events'],
-	backgroundColor:'#3b5e34',
+	backgroundColor:'#fff',
 	style:Titanium.UI.iPhone.SystemButtonStyle.BAR
 
 });
 
 events.setTitleControl(tabbedBar);
+
 
 
 var friendsFeed = Ti.UI.createTableView({
@@ -21,6 +22,8 @@ var friendsFeed = Ti.UI.createTableView({
 });
 
 events.add(friendsFeed);
+
+
 
 var topEventsFeed = Ti.UI.createTableView({
 	top:0,

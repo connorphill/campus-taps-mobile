@@ -5,11 +5,13 @@ fb.appid = "125520310866488";//Production
 fb.permissions = ['read_stream'];
 fb.forceDialogAuth = true;
 
-
+//login.js WINDOW SETTINGS
 var win = Ti.UI.currentWindow;
 
 win.backgroundColor = '#fff';
+//END login.js WINDOW SETTINGS 
  
+//LOGO IMAGE
 var campusTapsLogo = Ti.UI.createImageView({
 	image: '/images/campusTapsLogo.png',
 	top: 60,
@@ -17,15 +19,19 @@ var campusTapsLogo = Ti.UI.createImageView({
 	height: 100
 });
 win.add(campusTapsLogo); 
+
+//END LOGO IMAGE 
  
+//FACEBOOK LOGIN BUTTON 
 var fbSignupBtn = fb.createLoginButton({
     bottom: 50,
     style : Ti.Facebook.BUTTON_STYLE_WIDE
 });
 win.add(fbSignupBtn);
 
+//END FACEBOOK LOGIN BUTTON
 
-
+//FACEBOOK AND ACS EVENT LISTENER (LOGIN)
  
  fb.createLoginButton.addEventListener('login', function(e) {
 	if (e.success) {
@@ -46,7 +52,6 @@ win.add(fbSignupBtn);
 				Ti.API.info('Success: ' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 				
 								win.close();
-
 						
 			} else {
 				alert('Error: ' + ((e.error && e.message) || JSON.stringify(e)));
@@ -62,7 +67,8 @@ win.add(fbSignupBtn);
 }); 
  
  
- 
+//END FACEBOOK AND ACS EVENT LISTENER (LOGIN)
+
  
 
 

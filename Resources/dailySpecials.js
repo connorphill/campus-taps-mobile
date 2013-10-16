@@ -1,8 +1,12 @@
+
+//dailySpecials.js WINDOW SETTINGS
 var daily = Ti.UI.currentWindow;
 daily.barColor = '#3d6430';
 daily.titleImage = 'tap.png';
 daily.backgroundColor = '#e9e7e7';
 daily.translucent = false;
+//END dailySpecials.js WINDOW SETTINGS
+
 var customFont = 'HouschkaAlt';
 
 
@@ -13,19 +17,22 @@ var data = [];
 
 var xhr = Ti.Network.createHTTPClient();
 
+//LOAD JSON DATA
 xhr.onload = function(){
 	var json = JSON.parse(this.responseText);
     Ti.API.info(json.length);
     for (var i = 0; i < json.length; i++) {
     	
-    	
+//SCROLLABLE VIEW DATA
 var barView = Ti.UI.createView({
     		backgroundColor:'#123',
     		data:json[i].bar,
     		filter: json[i].bar.name
     		});
     		
-//START Name of Bar    		
+//END SCROLLABLE VIEW DATA
+    		
+//BAR NAME  		
 
  var barNameLabel = Ti.UI.createLabel({
 	text:json[i].bar.name,
@@ -42,9 +49,9 @@ var barView = Ti.UI.createView({
 
 barView.add(barNameLabel);
 
-//END of Name of Bar
+//END BAR NAME
 
-//START Bar Profile Image
+//BAR IMAGE
 
 var barImage = Ti.UI.createImageView({
 	image: json[i].bar.logo_url,
@@ -55,9 +62,9 @@ var barImage = Ti.UI.createImageView({
 
 barView.add(barImage);
 
-//END of Bar Profile Image
+//END BAR IMAGE
 
-//START Daily Drink Specials
+//DAILY DRINK SPECIALS VIEW
 
 var drinkSpecialsView = Ti.UI.createScrollView({
 	backgroundColor:'#000',
@@ -72,9 +79,9 @@ var drinkSpecialsView = Ti.UI.createScrollView({
 
 barView.add(drinkSpecialsView);
 
-//END Daily Drink Specials
+//END DAILY DRINK SPECIALS VIEW
 
-// START Bars Daily Drink Specials
+//DAILY DRINK SPECIALS DATA LABEL
 
 var drinkSpecialsLabel = Ti.UI.createLabel({
 	text:json[i].bar.mon_special,
@@ -86,13 +93,13 @@ var drinkSpecialsLabel = Ti.UI.createLabel({
 
 drinkSpecialsView.add(drinkSpecialsLabel);
 
+//END DAILY DRINK SPECIALS DATA LABEL
+
 
         data.push(barView);
     }
     
-//END Bars Daily Drink Specials
-
-//START Content Slider Element (Element #1)
+//CONTENT SLIDER ELEMENT (Element #1)
    
 var contentSlider = Ti.UI.createScrollableView({
 	scrollType:'horizontal',
@@ -112,9 +119,9 @@ xhr.open('GET', 'http://campustaps.com/bars.json');
 xhr.send();
 
 
-//END Content Slider Element (Element #1)
+//END CONTENT SLIDER ELEMENT (Element #1)
 
-//START Attending Label and Button (Element #2)
+//ATTENDING VIEW (Element #2)
 
 var attendingView = Ti.UI.createView({
 	backgroundColor:'#fff',
@@ -127,6 +134,9 @@ var attendingView = Ti.UI.createView({
 
 daily.add(attendingView);
 
+//END ATTENDING VIEW (Element #2)
+
+//"WHERE ARE YOU HEADING TONIGHT?" LABEL
 
 var attendingLabel = Ti.UI.createLabel({
 	text:'Where are you heading tonight?',
@@ -137,7 +147,10 @@ var attendingLabel = Ti.UI.createLabel({
 
 attendingView.add(attendingLabel);
 
-//START "HERE" Button
+//END "WHERE ARE YOU HEADING TONIGHT?" LABEL
+
+
+//"HERE" BUTTON
 
 var attendingButton = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/attendingButton.png',
@@ -151,11 +164,10 @@ var attendingButton = Ti.UI.createButton({
 
 attendingView.add(attendingButton);
 
-//END "HERE" Button
+//END "HERE" BUTTON
 
-//END Attending Label and Button (Element #2)
 
-//START Area Buttons view (Element #3)
+//AREA BUTTONS VIEW (Element #3)
 
 var scrollView = Ti.UI.createScrollView({
   contentWidth: Ti.UI.FILL, // changed
@@ -170,9 +182,9 @@ var scrollView = Ti.UI.createScrollView({
 
 daily.add(scrollView);
 
-//END Area Buttons view
+//END AREA BUTTONS VIEW (Element #3)
 
-//START Button toggle function and selected button cases
+//AREA BUTTON TOGGLE
 
 var toggledButton;
 var toggleButton = function (e) {
@@ -197,9 +209,9 @@ var toggleButton = function (e) {
 };
 
 
-//END Button toggle function and selected button cases
+//END AREA BUTTON TOGGLE
 
-
+//ALL BARS BUTTON
 var allBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalAreaSelected.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
@@ -217,6 +229,9 @@ var allBars = Ti.UI.createButton({
 
 scrollView.add(allBars);
 
+//END ALL BARS BUTTON
+
+//JOHNS HOPKINS BUTTON
 var johnsHopkinsBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/johnsHopkinsArea.png',
 	imageOff:'/images/dailySpecials/johnsHopkinsArea.png',
@@ -235,6 +250,10 @@ var johnsHopkinsBars = Ti.UI.createButton({
 
 scrollView.add(johnsHopkinsBars);
 
+//END JOHNS HOPKINS BUTTON
+
+
+//LOYOLA BUTTON
 var loyolaBars = Ti.UI.createButton({
 	backgroundImage:'/images/loyolaAreaNew.png',
 	imageOff:'/images/loyolaAreaNEW.png',
@@ -252,9 +271,9 @@ var loyolaBars = Ti.UI.createButton({
 });
 
 scrollView.add(loyolaBars);
+//END LOYOLA BUTTON
 
-
-
+//TOWSON BUTTON
 var towsonBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/towsonArea.png',
 	imageOff:'/images/dailySpecials/towsonArea.png',
@@ -272,8 +291,10 @@ var towsonBars = Ti.UI.createButton({
 });
 
 scrollView.add(towsonBars);
+//END TOWSON BUTTON
 
 
+//DOWNTOWN BUTTON
 var downtownBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalArea.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
@@ -291,7 +312,9 @@ var downtownBars = Ti.UI.createButton({
 });
 
 scrollView.add(downtownBars);
+//END DOWNTOWN BUTTON
 
+//FEDERAL HILL BUTTON
 var federalHillBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalArea.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
@@ -309,7 +332,9 @@ var federalHillBars = Ti.UI.createButton({
 });
 
 scrollView.add(federalHillBars);
+//FEDERAL HILL BUTTON
 
+//FELLS POINT BUTTON
 var fellsPointBars = Ti.UI.createButton({
 	backgroundImage:'/images/dailySpecials/generalArea.png',
 	imageOff:'/images/dailySpecials/generalArea.png',
@@ -327,8 +352,10 @@ var fellsPointBars = Ti.UI.createButton({
 });
 
 scrollView.add(fellsPointBars);
+//END FELLS POINT BUTTON
 
 
+//AREA BUTTONS EVENT LISTENER
 allBars.addEventListener('click', toggleButton);
 loyolaBars.addEventListener('click', toggleButton);
 johnsHopkinsBars.addEventListener('click', toggleButton);
@@ -336,8 +363,10 @@ towsonBars.addEventListener('click', toggleButton);
 downtownBars.addEventListener('click', toggleButton);
 federalHillBars.addEventListener('click', toggleButton);
 fellsPointBars.addEventListener('click', toggleButton);
+//END AREA BUTTONS EVENT LISTENER
 
 
-
+//TOGGLE ALL BARS BUTTON
 toggledButton = allBars; // set to on button
 
+//END TOGGLE ALL BARS BUTTON

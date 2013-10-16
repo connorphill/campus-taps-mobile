@@ -1,43 +1,43 @@
+var Cloud = require('ti.cloud');
+
+//profile.js SETTINGS
 var profile = Ti.UI.currentWindow;
 profile.barColor = '#3d6430';
 profile.titleImage = 'tap.png';
 profile.backgroundColor = '#e9e7e7';
-profile.translucent = '#3d6430';
-
+profile.translucent = false;
 var customFont = 'HouschkaAlt';
 
 
 var fb = require('facebook');
-var Cloud = require('ti.cloud');
-Cloud.debug = true;
 
 
-//START Facebook Code
-        
 
-//Create Facebook Session
 
 		fb.appid = '125520310866488';
-		fb.permissions = ['read_stream']; //Permissions your app need
+		fb.permissions = ['read_stream']; 
 		
-//End Facebook Session		
-		
+//OPEN profileSettings.js BUTTON		
  var rightButton = Ti.UI.createImageView({
    	image:'/images/settingsIconNew.png',
    	width:50,
    	height:36
 });             
- 
+
+
+//OPEN profileSettings.js EVENT LISTENER 
 rightButton.addEventListener('click', function(){
-	 var settingsWindow = Ti.UI.createWindow({
-	 url:'profileSettings.js',
-	
-	 });
-	 Ti.UI.currentTab.open(settingsWindow);
+	 
+	 var win = require('profileSettings').profileSettingsWin;
+	 var profileSettingsDetail = new win();
+	 profile.tab.open(profileSettingsDetail, {animated:true});
 });
+
  
 profile.rightNavButton = rightButton;
 	
+	
+//PROFILE VIEW CONTAINS (Profile Picture, User Name and Icon Indicator of Going Out Status)
 var userProfileView = Ti.UI.createView({
 	backgroundColor:'#fff',
 	top:5,
@@ -48,7 +48,9 @@ var userProfileView = Ti.UI.createView({
 });
 
 profile.add(userProfileView);
+//END PROFILE VIEW
 
+//USER PROFILE
 var profilePicture = Ti.UI.createImageView({
     image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
      top: 15,
@@ -58,8 +60,9 @@ var profilePicture = Ti.UI.createImageView({
  
 });
 userProfileView.add(profilePicture);
+//END USER PROFILE
 
-
+//GRAB PROFILE PICTURE AND USE AS (ACS) USER IMAGE
 Cloud.Photos.create({
     photo: profilePicture.toImage()
 }, function (e) {
@@ -76,6 +79,9 @@ Cloud.Photos.create({
     }
 });
 
+//END GRAB PROFILE PICTURE AND USE AS (ACS) USER IMAGE
+
+//GOING OUT STATUS ICON INDICATOR
 var profileGoingOutStatus = Ti.UI.createImageView({
         top:30,
         left:70,
@@ -83,39 +89,29 @@ var profileGoingOutStatus = Ti.UI.createImageView({
     });
 
 userProfileView.add(profileGoingOutStatus);
+//END GOING OUT STATUS ICON INDICATOR
 
-
-  fb.requestWithGraphPath('me', {}, 
+//USERNAME 
+ fb.requestWithGraphPath('me', {}, 
          "GET", function(e) {
     if (e.success) {
         var response = JSON.parse(e.result);
          var profileName = Ti.UI.createLabel({
          text: response.name,
-         top: 35,
+         top: 30,
          left: 110
          });
- 
+         userProfileView.add(profileName);
     } else if (e.error) {
- 
                         alert("Error = "+e.error);
- 
                     } else {
- 
                         alert('Unknown response');
- 
-                    }
- 
-                    userProfileView.add(profileName);
- 
- 
- 
- 
+                    }  
                 });
 
+//END USERNAME 
 
-//Going Out Status
-
-
+//GOING OUT STATUS VIEW
 var goingOutView = Ti.UI.createView({
 	backgroundColor:'#fff',
 	width: 300,
@@ -127,9 +123,9 @@ var goingOutView = Ti.UI.createView({
 });
 
 profile.add(goingOutView);
+//END GOING OUT STATUS VIEW
 
-
-
+//ARE YOU ATTENDING LABEL
 var attendingLabel = Ti.UI.createLabel({
 	text: "Are you going out:",
 	font: {size:14,
@@ -139,10 +135,10 @@ var attendingLabel = Ti.UI.createLabel({
 });
 
 goingOutView.add(attendingLabel);
-
+//END ARE YOU ATTENDING LABEL
 
 	
-
+//BUTTON TOGGLE SYSTEM FOR ARE YOU GOING OUT STATUS
 var toggledButton;
 var toggleButton = function (e) {
     if (e.source.isToggled === false) {
@@ -238,7 +234,7 @@ var toggleButton = function (e) {
 
 
 
-
+//GOING OUT - NO BUTTON = RED BUTTON
 var goingOutNo = Ti.UI.createButton({
     title: 'No',
     backgroundImage: '/images/noSelected.png',
@@ -254,6 +250,10 @@ var goingOutNo = Ti.UI.createButton({
 });
 
 goingOutView.add(goingOutNo);
+
+//END GOING OUT - NO BUTTON = RED BUTTON
+
+//GOING OUT - MAYBE BUTTON = YELLOW BUTTON
 
 var goingOutMaybe = Ti.UI.createButton({
     title: 'Maybe',
@@ -271,6 +271,10 @@ var goingOutMaybe = Ti.UI.createButton({
 
 goingOutView.add(goingOutMaybe);
 
+//END GOING OUT - MAYBE BUTTON = YELLOW BUTTON
+
+//GOING OUT - YES BUTTON = GREEN BUTTON
+
 var goingOutYes = Ti.UI.createButton({
     title: 'Yes',
     backgroundImage: '/images/yesbg.png',
@@ -287,17 +291,22 @@ var goingOutYes = Ti.UI.createButton({
 
 goingOutView.add(goingOutYes);
 
+//END GOING OUT - YES BUTTON = GREEN BUTTON
+
+//GOING OUT BUTTONS EVENT LISTENERS
 goingOutNo.addEventListener('click', toggleButton);
 goingOutMaybe.addEventListener('click', toggleButton);
 goingOutYes.addEventListener('click', toggleButton);
-toggledButton = goingOutNo; // set to on button
+//END GOING OUT BUTTONS EVENT LISTENERS
+
+toggledButton = goingOutNo; // set to GOING OUT - NO BUTTON
 
 
 //END GOING OUT STATUS
 
 
 
-//GOING OUT FRIENDS TABLE
+//GOING OUT FRIENDS TAB (BUTTONS) VIEW 
 
 var friendsGoingOutButtons = Ti.UI.createView({
 	backgroundColor:'#e9e7e7',
@@ -310,6 +319,9 @@ var friendsGoingOutButtons = Ti.UI.createView({
 
 profile.add(friendsGoingOutButtons);
 
+//END GOING OUT FRIENDS TAB (BUTTONS) VIEW 
+
+//GOING OUT TABLE VIEW BACKGROUND
 var friendsGoingOutStatus = Ti.UI.createView({
 	backgroundColor:'#fff',
 	height:'100%',
@@ -323,8 +335,10 @@ var friendsGoingOutStatus = Ti.UI.createView({
 
 profile.add(friendsGoingOutStatus);
 
+//END GOING OUT TABLE VIEW BACKGROUND
 
 
+//TOGGLE FOR FRIENDS TAB BUTTONS
 
 var selectedButton;
 
@@ -345,7 +359,9 @@ var toggle = function (e) {
 		}
 };
 
+//END TOGGLE FOR FRIENDS TAB BUTTONS
 
+//FRIENDS "Yes" BUTTON TAB
 var friendsGoingOutYes = Ti.UI.createButton({
 	backgroundImage: '/images/profile/friendsGoingOutSelected.png',
 	title:'Yes',
@@ -360,6 +376,10 @@ var friendsGoingOutYes = Ti.UI.createButton({
 
 friendsGoingOutButtons.add(friendsGoingOutYes);
 
+//END FRIENDS "Yes" BUTTON TAB
+
+
+//FRIENDS "Maybe" BUTTON TAB
 var friendsGoingOutMaybe = Ti.UI.createButton({
 	backgroundImage: '/images/profile/friendsGoingOutBg.png',
 	title:'Maybe',
@@ -375,6 +395,10 @@ var friendsGoingOutMaybe = Ti.UI.createButton({
 
 friendsGoingOutButtons.add(friendsGoingOutMaybe);
 
+//END FRIENDS "Maybe" BUTTON TAB
+
+
+//FRIENDS "No" BUTTON TAB
 var friendsGoingOutNo = Ti.UI.createButton({
 	backgroundImage: '/images/profile/friendsGoingOutBg.png',
 	title:'No',
@@ -389,6 +413,10 @@ var friendsGoingOutNo = Ti.UI.createButton({
 
 friendsGoingOutButtons.add(friendsGoingOutNo);
 
+//END FRIENDS "No" BUTTON TAB
+
+
+//BLACK SPACER BETWEEN TAB BUTTONS AND TABLE
 var friendsSpacer = Ti.UI.createImageView({
 	image:'/images/profile/spacer.png',
 	height:4,
@@ -398,14 +426,16 @@ var friendsSpacer = Ti.UI.createImageView({
 });
 
 friendsGoingOutButtons.add(friendsSpacer);
+//END BLACK SPACER BETWEEN TAB BUTTONS AND TABLE
 
 
+//
 friendsGoingOutYes.addEventListener('click', toggle);
 friendsGoingOutMaybe.addEventListener('click', toggle);
 friendsGoingOutNo.addEventListener('click', toggle);
 selectedButton = friendsGoingOutYes; //Set to Selected Button
 
-
+//FRIENDS GOING OUT TABLE (BOTTOM TABLE WITH THREE TABS)
 var friendsGoingOutTable = Ti.UI.createTableView({
 	width:300,
 	top:30
@@ -413,12 +443,13 @@ var friendsGoingOutTable = Ti.UI.createTableView({
 
 friendsGoingOutStatus.add(friendsGoingOutTable);
 
+//END FRIENDS GOING OUT TABLE (BOTTOM TABLE WITH THREE TABS)
+
+//FRIENDS GOING OUT TABLE ROW 
 var friendsGoingOutTableRow = Ti.UI.createTableViewRow({
 	
 });
 
 friendsGoingOutTable.add(friendsGoingOutTableRow);
 
-
-
-//END FRIENDS GOING OUT TABLE
+//END FRIENDS GOING OUT TABLE ROW

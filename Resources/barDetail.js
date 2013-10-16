@@ -1,32 +1,34 @@
 function detail(data) {
+	
+	// barDetail.js WINDOW SETTINGS
     var self = Ti.UI.createWindow({
         backgroundColor:'#e9e7e7',
         title: data.name,
-        font:{fontFamily: customFont}
+        barColor: '#3d6430',
+      	navTintColor: '#fff',
+      	color:'#fff',
+      	translucent:false,
+        font:{fontFamily: customFont, color:'#fff'},
+        top:0,
+        leftNavButton: ButtonRetour
     });
     
-    self.barColor = '#3d6430';
-	self.barImage = '/images/navBar.png';
+   //END barDetail.js WINDOW SETTINGS
  
- 
- 
- var ButtonRetour = Ti.UI.createImageView({
-   	image:'/images/backButton.png',
-   	width:50,
-   	height:36
-});             
+ //BACK BUTTON
+ var ButtonRetour = Ti.UI.createButton();             
  
 ButtonRetour.addEventListener('click', function(){
     self.close();
 });
- 
-self.leftNavButton = ButtonRetour;
+ //BACK BUTTON
+
   
  
  
  var barData = [];
  
- 
+ //BAR IMAGE
  var barImage = Ti.UI.createImageView({
  	image:data.logo_url,
  	height:95,
@@ -37,6 +39,9 @@ self.leftNavButton = ButtonRetour;
  
  self.add(barImage);
  
+ //END BAR IMAGE
+ 
+ //ADDRESS VIEW
  var addressTitleView = Ti.UI.createView({
  	backgroundColor:'#3d6430',
  	height:20,
@@ -47,6 +52,9 @@ self.leftNavButton = ButtonRetour;
  
  self.add(addressTitleView);
  
+ //END ADDRESS VIEW
+ 
+ //"ADDRESS" LABEL
  var addressTitleLabel = Ti.UI.createLabel({
  	text:'ADDRESS',
  	color:'#fff',
@@ -56,6 +64,9 @@ self.leftNavButton = ButtonRetour;
  
  addressTitleView.add(addressTitleLabel);
  
+ //END "ADDRESS" LABEL
+ 
+ //BAR ADDRESS VIEW
  var addressView = Ti.UI.createView({
  	backgroundColor:'#fff',
  	height:70,
@@ -66,6 +77,10 @@ self.leftNavButton = ButtonRetour;
  
  self.add(addressView);
  
+ //END BAR ADDRESS VIEW
+ 
+ 
+ //BAR ADDRESS
  var addressLabel = Titanium.UI.createLabel({
  	text: data.address + "\n" + data.city + ", MD",
  	height:Ti.UI.SIZE,
@@ -79,6 +94,9 @@ self.leftNavButton = ButtonRetour;
  
  addressLabel.height='auto';
  
+ //END BAR ADDRESS
+ 
+ //"DESCRIPTION" VIEW
  var descriptionTitleView = Ti.UI.createView({
  	backgroundColor:'#3d6430',
  	height:20,
@@ -88,8 +106,9 @@ self.leftNavButton = ButtonRetour;
  });
  
  self.add(descriptionTitleView);
- 
+ //END "DESCRIPTION" VIEW
 
+//"DESCRIPTION" LABEL
  var descriptionTitle = Titanium.UI.createLabel({
  	text: "DESCRIPTION",
  	color: '#fff',
@@ -98,8 +117,9 @@ self.leftNavButton = ButtonRetour;
  });
  
  descriptionTitleView.add(descriptionTitle);
+ //END "DESCRIPTION" LABEL
  
- 
+ //BAR DESCRIPTION VIEW
  var descriptionSummaryView = Ti.UI.createScrollView({
  	backgroundColor:'#fff',
  	showVerticalScrollIndicator: true,
@@ -111,6 +131,9 @@ self.leftNavButton = ButtonRetour;
  
  self.add(descriptionSummaryView);
  
+ //END BAR DESCRIPTION VIEW
+ 
+ //BAR DESCRIPTION
  var descriptionSummary = Ti.UI.createLabel({
  	text: data.description,
  	font: {size:12,
@@ -118,6 +141,8 @@ self.leftNavButton = ButtonRetour;
  });
  
  descriptionSummaryView.add(descriptionSummary);
+ 
+ //END BAR DESCRIPTION
  
  
  var specialsLabelView = Ti.UI.createScrollView({

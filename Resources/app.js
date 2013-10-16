@@ -1,7 +1,9 @@
+var fb = require('facebook');
+fb.appid = "125520310866488";//Production
+fb.permissions = ['read_stream'];
 
-Titanium.Facebook.appid = "320766681373313";//Production
-Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
- 
+
+//IF A USER IS LOGGED IN, DO NOT OPEN LOGIN WINDOW, IF FALSE, OPEN LOGIN WINDOW
  if (Titanium.Facebook.loggedIn == true)
 {}
 else
@@ -24,13 +26,16 @@ Titanium.UI.setBackgroundColor('#000');
 
 
 // create tab group
-var tabGroup = Titanium.UI.createTabGroup();
+var tabGroup = Titanium.UI.createTabGroup({
+	tabsTintColor:'#3d6430',
+	activeTabIconTint:'#3d6430',
+	tabsTintColor:'#3d6430',
+	backgroundColor:'#fff'
+});
 
 
 
-//
-// create base UI tab and root window
-//
+//dailySpecials.js WINDOW AND TAB
 var dailySpecials = Ti.UI.createWindow({
 	backgroundColor: '#fff',
 	url:'dailySpecials.js'
@@ -41,7 +46,7 @@ var dailySpecialsTab = Titanium.UI.createTab({
     title:'Today\'s Specials',
     window:dailySpecials
 });
-
+//END dailySpecials.js
 
 
 var eventsFeed = Ti.UI.createWindow({
@@ -61,7 +66,6 @@ var eventsFeedTab = Titanium.UI.createTab({
 // create controls tab and root window
 //
 var bars = Titanium.UI.createWindow({  
-    title:'Tab 2',
     backgroundColor:'#fff',
     url:'bars.js'
 });

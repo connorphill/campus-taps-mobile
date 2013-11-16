@@ -50,6 +50,15 @@ var findFriends = Titanium.UI.createTableViewRow({
 	});
 //END findFriends.js BUTTON
 	
+	
+//friends.js
+var friends = Titanium.UI.createTableViewRow({
+	title:"Friends",
+	font:{fontFamily: customFont},
+	backgroundColor:'#fff'
+	});
+
+//END friends.js	
 
 //BUTTON (WORK IN PROGRESS)
 
@@ -71,6 +80,7 @@ var notifications = Titanium.UI.createTableViewRow({
 
 //ADD TO SOCIAL SETTINGS TABLE
 socialSettings.add(findFriends);
+socialSettings.add(friends);
 socialSettings.add(inviteFriends);
 socialSettings.add(notifications);
 
@@ -206,6 +216,18 @@ findFriends.addEventListener('click', function(){
 
 //END OPEN findFriends.js WINDOW
 
+
+//OPEN friends.js WINDOW
+friends.addEventListener('click', function(){
+	var friendsList = Ti.UI.createWindow({
+  	url:'friends.js',
+  	navBarHidden: false,
+  	modal: false,
+});
+	 Ti.UI.currentTab.open(friendsList);
+});
+
+//END OPEN friends.js WINDOW
 
 //OPEN notification.js WINDOW
 notifications.addEventListener('click', function(){

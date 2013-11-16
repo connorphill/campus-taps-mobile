@@ -6,7 +6,7 @@ data =[];
 
 //WINDOW SETTINGS
 var friends = Ti.UI.currentWindow;
-friends.barColor = '#3b5e34';
+friends.barColor = '#e9e7e7';
 friends.title = "Friends";
 friends.barImage = '/images/navBar.png';
 friends.backgroundColor = '#fff';
@@ -37,7 +37,7 @@ var barList = Titanium.UI.createTableView({
 });
 friends.add(barList);
 
-//FIND FRIENDS WHO HAVE APP INSTALLED 
+//FIND FRIENDS WHO HAVE APP INSTALLED  *NOT FINISHED*
 
 Cloud.SocialIntegrations.searchFacebookFriends(function (e){
     if (e.success) {
@@ -88,8 +88,13 @@ Cloud.SocialIntegrations.searchFacebookFriends(function (e){
     			if (e.success) {
        				 alert('Friend(s) added');
        				 addFriend.backgroundImage = '/images/findFriends/friend.png';
-       				 addFriend.title = 'Friend';
-    			} else {
+       				 addFriend.title = 'Request';
+    			} else if (user.id === true) {
+    				addFriend.backgroundImage = 'images/findFriends/friend.png',
+    				addFriend.title = "Friend";
+    			}
+    			
+    			 else {
        				 alert('Error:\n' +
            			 ((e.error && e.message) || JSON.stringify(e)));
     		}
@@ -98,7 +103,7 @@ Cloud.SocialIntegrations.searchFacebookFriends(function (e){
                 
                 //FRIEND PROFILE IMAGE (STILL NEEDS WORK)
                 var profileImage = Ti.UI.createImageView({
-                	image:user.photo.id,
+                	
                 	height:50,
                 	width:50,
                 	left:5

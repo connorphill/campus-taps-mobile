@@ -25,6 +25,7 @@
     <guid>a5acf816-d247-4c1d-95a3-17b3febdafa0</guid>
     <property name="ti.ui.defaultunit" type="string">system</property>
     <iphone>
+    	
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>
         </orientations>
@@ -35,7 +36,13 @@
             <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
     </iphone>
-  
+  	<ios>
+    <plist>
+        <dict>
+            <key>UIStatusBarStyle</key><string>UIStatusBarStyleLightContent</string>
+        </dict>
+    </plist>
+</ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
     <mobileweb>
         <precache/>

@@ -6,6 +6,7 @@ daily.titleImage = 'tap.png';
 daily.backgroundColor = '#e9e7e7';
 daily.translucent = false;
 //END dailySpecials.js WINDOW SETTINGS
+daily.statusBarStyle = Ti.UI.iPhone.StatusBar.LIGHT_CONTENT;
 
 var customFont = 'HouschkaAlt';
 

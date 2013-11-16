@@ -19,9 +19,9 @@ var fb = require('facebook');
 		
 //OPEN profileSettings.js BUTTON		
  var rightButton = Ti.UI.createImageView({
-   	image:'/images/settingsIconNew.png',
-   	width:50,
-   	height:36
+   	image:'/images/profileSettings.png',
+   	width:27,
+   	height:17
 });             
 
 
@@ -52,7 +52,7 @@ profile.add(userProfileView);
 
 //USER PROFILE
 var profilePicture = Ti.UI.createImageView({
-    image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture',
+    image : 'https://graph.facebook.com/' + Ti.Facebook.uid + '/picture?type=normal',
      top: 15,
  width:50,
  height:50,
